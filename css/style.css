@@ -72,12 +72,18 @@ a {
 #about {
   width: 100%;
   height: 100vh;
+  overflow-y: hidden;
+}
+
+#about .container {
+  margin-top: 15vh;
 }
 
 /* Blogs */
 #blogs {
   width: 100%;
   height: 100vh;
+  overflow-y: hidden;
 }
 
 #blogs .container {
@@ -88,6 +94,7 @@ a {
 #projects {
   width: 100%;
   height: 100vh;
+  overflow-y: hidden;
 }
 
 /* Contact */
