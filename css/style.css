@@ -23,7 +23,7 @@ img {
 
 a {
   text-decoration: none;
-  color: #ccc;
+  color: #fff;
 }
 
 /* Section */
@@ -80,6 +80,10 @@ a {
   height: 100vh;
 }
 
+#blogs .container {
+  margin-top: 20vh;
+}
+
 /* Projects */
 #projects {
   width: 100%;
@@ -90,6 +94,11 @@ a {
 #contact {
   width: 100%;
   height: 100vh;
+  overflow-y: hidden;
+}
+
+#contact .container {
+  margin-top: 20vh;
 }
 
 /* Footer */
@@ -154,6 +163,10 @@ footer .footer-bottom {
 
 .bg-light {
   background: var(--light-color);
+  color: #333;
+}
+
+.bg-light a {
   color: #333;
 }
 
