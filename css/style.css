@@ -26,6 +26,10 @@ a {
   color: #fff;
 }
 
+td {
+  padding: 2rem;
+}
+
 /* Section */
 .section {
   padding: 3rem 0;
