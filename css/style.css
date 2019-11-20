@@ -101,6 +101,10 @@ td {
   overflow-y: hidden;
 }
 
+#projects .container {
+  margin-top: 5vh;
+}
+
 /* Contact */
 #contact {
   width: 100%;
@@ -197,7 +201,10 @@ nav {
   background-color: #333;
   color: #eee;
   position: fixed;
+  display: flex;
+  justify-content: space-between;
 }
+
 nav ul {
   padding: 0;
   margin: 0;
@@ -215,6 +222,15 @@ nav a {
   color: #eee;
   text-decoration: none;
 }
+
+nav li a {
+  transition: all 0.3s ease 0s;
+}
+
+nav li a:hover {
+  font-size: 1.2rem;  
+}
+
 nav li:hover {
   background-color: #444;
 }
