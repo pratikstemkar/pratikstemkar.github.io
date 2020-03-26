@@ -107,7 +107,7 @@ td {
 
 /* Contact */
 #contact {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   overflow-y: hidden;
 }
@@ -244,11 +244,17 @@ nav a#openup {
   }
 
   #showcase {
-    height: 50vh;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    overflow-y: hidden;
+    background: url('../assets/img/person-using-laptop-computer.jpg') no-repeat top/cover;
   }
 
   #showcase .container {
-    margin-top: 15vh;
+    margin-top: 25vh;
   }
 
   #showcase h1 {
@@ -257,6 +263,10 @@ nav a#openup {
 
   #showcase h2 {
     font-size: 1.5rem;
+  }
+
+  #showcase img {
+    opacity: 0.4;
   }
 
   nav {
