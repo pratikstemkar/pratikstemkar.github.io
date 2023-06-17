@@ -2,7 +2,7 @@
 <html>
 	{{- partial "head.html" . -}}
 	<body>
-		<header>{{- partial "header.html" . -}}</header>
+		<header class="header-div">{{- partial "header.html" . -}}</header>
 		<main>{{- block "main" . }}{{- end }}</main>
 		<footer>{{- partial "footer.html" . -}}</footer>
 		{{ $js := resources.Get "js/rocinante.js" | resources.Minify }}
