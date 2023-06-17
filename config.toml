@@ -1,0 +1,76 @@
+baseURL = 'http://pratikstemkar.github.io/'
+languageCode = 'en-us'
+title = 'Pratik Temkar'
+theme = 'rocinante'
+paginate = 3
+summaryLength = 0
+
+[permalinks]
+  posts = "/:year/:month/:day/:filename/"
+  movies = "/:year/:month/:day/:filename/"
+
+[markup]
+  [markup.highlight]
+    style = "monokailight"
+    tabWidth = 2
+  [markup.goldmark.renderer]
+    unsafe= true
+
+[params]
+  mode = "dark"
+  favicon = "/icons/favicon.ico"
+  description = "Pratik Temkar's portfolio/personal website."
+  mainSections = ["posts", "photos", "movies", "projects"]
+  email = "pratikstemkar@gmail.com"
+  about = """
+Hi. I'm **Pratik**. I tinker with code in the hope of building something new.
+
+Interested in music, films, and backend infrastructure.
+<br />
+
+I'm a skilled **Full Stack Developer**, driven by a passion for creating robust and efficient systems that power the digital landscape. I excel at designing and implementing high-performance server-side solutions. From building scalable APIs and microservices to optimizing database management and ensuring data integrity, I'm well-versed in the intricacies of backend development.
+<br />
+
+"""
+# _I'm actively looking for work right now. Feel free to have a look at my resume below._
+
+  [[params.links]]
+    # [[params.links.link]]
+    #   name = "Resume"
+    #   href = "/Resume.pdf"
+    #   new_tab = true
+    [[params.links.link]]
+      name = "Email"
+      href = "/contact"
+      smart_email_link = true
+    # [[params.links.link]]
+    #   name = "Projects"
+    #   href = "/projects"
+
+  [[params.links]]
+    # [[params.links.link]]
+    #   name = "Posts"
+    #   href = "/posts"
+    # [[params.links.link]]
+    #   name = "Movies"
+    #   href = "/movies"
+    # [[params.links.link]]
+    #   name = "Photos"
+    #   href = "/photos"
+    # [[params.links.link]]
+    #   name = "Tags"
+    #   href = "/tags"
+
+  # [[params.links]]    
+    [[params.links.link]]
+      name = "GitHub"
+      href = "https://github.com/pratikstemkar"
+      new_tab = true
+    [[params.links.link]]
+      name = "Twitter"
+      href = "https://twitter.com/pratikstemkar"
+      new_tab = true
+    [[params.links.link]]
+      name = "LinkedIn"
+      href = "https://linkedin.com/in/pratikstemkar"
+      new_tab = true
