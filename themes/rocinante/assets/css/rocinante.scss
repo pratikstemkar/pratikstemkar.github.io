@@ -11,6 +11,11 @@ body {
 	line-height: 1.6;
 }
 
+::selection {
+	color: #fff;
+	background: #333;
+}
+
 p {
 	margin: 1.25em 0;
 }
@@ -378,7 +383,7 @@ footer {
 
 @media (max-width: 510px) {
 	body {
-		font-size: 18px;
+		font-size: 16px;
 	}
 	.album .photos {
 		grid-template-columns: 1fr;
