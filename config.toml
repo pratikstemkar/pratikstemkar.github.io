@@ -4,6 +4,12 @@ title = 'Pratik Temkar'
 theme = 'rocinante'
 paginate = 3
 summaryLength = 0
+enableRobotsTXT = true
+
+[sitemap]
+  changefreq = 'monthly'
+  filename = 'sitemap.xml'
+  priority = 0.5
 
 [permalinks]
   posts = "/:year/:month/:day/:filename/"
@@ -20,7 +26,7 @@ summaryLength = 0
   mode = "dark"
   favicon = "/icons/favicon.ico"
   description = "Pratik Temkar's portfolio/personal website."
-  mainSections = ["posts", "photos", "movies", "projects"]
+  mainSections = ["posts", "projects"]
   email = "pratikstemkar@gmail.com"
   about = """
 Hi. I'm **Pratik**. I tinker with code in the hope of building something new.

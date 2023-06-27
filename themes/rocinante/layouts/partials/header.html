@@ -1,12 +1,36 @@
 <h2>
-	{{ if and (.IsHome) (not (.Scratch.Get "pagenumber")) }} › {{ .Site.Title }}
+	<!-- {{ if and (.IsHome) (not (.Scratch.Get "pagenumber")) }} › {{ .Site.Title }}
 	{{ else }}
 	<a href="{{ .Site.BaseURL }}">‹ {{ .Site.Title }}</a>
-	{{ end }}
+	{{ end }} -->
+	<div style="display: flex; align-items: center">
+		<a href="{{ .Site.BaseURL }}/pfp/pfp-blue-bw.jpg"
+			><img
+				src="/pfp/pfp-blue-bw.jpg"
+				style="
+					margin-right: 1rem;
+					height: 5rem;
+					width: 5rem;
+					border-radius: 50%;
+				"
+		/></a>
+
+		<div>
+			<span style="font-size: 2rem">{{ .Site.Title }}</span><br />
+			<span style="font-size: 1rem; font-weight: 400; color: slategray"
+				>Ideas on code, cinema, and life</span
+			>
+		</div>
+	</div>
 </h2>
 <ul class="navbar-links">
-	<!-- <li><a href="/">Home</a></li> -->
+	<li><a href="/">Home</a></li>
 	<!-- <li><a href="/posts">Blog</a></li>
 	<li><a href="/projects">Projects</a></li> -->
+	<li>
+		<a href="/index.xml"
+			><img src="/logos/rss.svg" style="height: 1rem; width: 1rem"
+		/></a>
+	</li>
 	<!-- <li><a href="/projects">Now</a></li> -->
 </ul>
