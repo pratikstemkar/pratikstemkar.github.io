@@ -7,7 +7,7 @@ $fonts: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
 body {
 	font-family: $fonts;
 	color: #333;
-	font-size: 18px;
+	font-size: 16px;
 	line-height: 1.6;
 }
 
@@ -383,7 +383,7 @@ footer {
 
 @media (max-width: 510px) {
 	body {
-		font-size: 18px;
+		font-size: 16px;
 	}
 	.album .photos {
 		grid-template-columns: 1fr;

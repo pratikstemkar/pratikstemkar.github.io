@@ -1,7 +1,8 @@
 {{ define "main" }}
 <div class="combined-title-pagination">
 	<h1>{{ .Title }}</h1>
-	{{ if ne .Paginator.PageNumber 1 }}
+	<br />See all projects <a href="http://github.com/pratikstemkar">here</a>. {{
+	if ne .Paginator.PageNumber 1 }}
 	<h3 class="current-page">Page {{.Paginator.PageNumber}}</h3>
 	{{ end }}
 </div>

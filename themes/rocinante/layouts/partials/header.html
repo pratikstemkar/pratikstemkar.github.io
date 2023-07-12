@@ -4,7 +4,7 @@
 	<a href="{{ .Site.BaseURL }}">‹ {{ .Site.Title }}</a>
 	{{ end }} -->
 	<div style="display: flex; align-items: center">
-		<a href="{{ .Site.BaseURL }}/pfp/pfp-blue-bw.jpg"
+		<a href="{{ .Site.BaseURL }}"
 			><img
 				src="/pfp/pfp-blue-bw.jpg"
 				style="
@@ -16,7 +16,9 @@
 		/></a>
 
 		<div>
-			<span style="font-size: 2rem">{{ .Site.Title }}</span><br />
+			<a href="{{ .Site.BaseURL }}"
+				><span style="font-size: 2rem; color: black">{{ .Site.Title }}</span></a
+			><br />
 			<span style="font-size: 1rem; font-weight: 400; color: slategray"
 				>Ideas on code, cinema, and life</span
 			>
@@ -24,13 +26,13 @@
 	</div>
 </h2>
 <ul class="navbar-links">
-	<li><a href="/">Home</a></li>
-	<!-- <li><a href="/posts">Blog</a></li>
-	<li><a href="/projects">Projects</a></li> -->
+	<!-- <li><a href="/about">About</a></li>
+	<li><a href="/blog">Blog</a></li> -->
+	<!-- <li><a href="/now">Now</a></li> -->
+	<!-- <li><a href="/projects">Projects</a></li> -->
 	<li>
 		<a href="/index.xml"
 			><img src="/logos/rss.svg" style="height: 1rem; width: 1rem"
 		/></a>
 	</li>
-	<!-- <li><a href="/projects">Now</a></li> -->
 </ul>

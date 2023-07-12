@@ -26,7 +26,7 @@ enableRobotsTXT = true
   mode = "dark"
   favicon = "/icons/favicon.ico"
   description = "Pratik Temkar's portfolio/personal website."
-  mainSections = ["posts", "projects"]
+  mainSections = ["posts", "blog", "projects"]
   email = "pratikstemkar@gmail.com"
   about = """
 Hi. I'm **Pratik**. I tinker with code in the hope of building something new.
@@ -36,6 +36,8 @@ Interested in music, films, and backend infrastructure.
 
 I'm a skilled **Full Stack Developer**, driven by a passion for creating robust and efficient systems that power the digital landscape. I excel at designing and implementing high-performance server-side solutions. From building scalable APIs and microservices to optimizing database management and ensuring data integrity, I'm well-versed in the intricacies of backend development.
 <br />
+
+
 
 """
 # _I'm actively looking for work right now. Feel free to have a look at my resume below._
@@ -80,3 +82,7 @@ I'm a skilled **Full Stack Developer**, driven by a passion for creating robust 
       name = "LinkedIn"
       href = "https://linkedin.com/in/pratikstemkar"
       new_tab = true
+    # [[params.links.link]]
+    #   name = "Leetcode"
+    #   href = "https://leetcode.com/pratikstemkar"
+    #   new_tab = true
