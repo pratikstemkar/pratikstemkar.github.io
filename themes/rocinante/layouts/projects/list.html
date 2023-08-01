@@ -1,11 +1,27 @@
 {{ define "main" }}
 <div class="combined-title-pagination">
 	<h1>{{ .Title }}</h1>
-	<br />See all projects <a href="http://github.com/pratikstemkar">here</a>. {{
-	if ne .Paginator.PageNumber 1 }}
+	<br />View all my projects and contributions on 
+	<a href="http://github.com/pratikstemkar" target="_blank">GitHub</a>. {{ if ne
+	.Paginator.PageNumber 1 }}
 	<h3 class="current-page">Page {{.Paginator.PageNumber}}</h3>
 	{{ end }}
 </div>
 <hr />
-{{- partial "listcontent.html" . -}} {{- partial "pagination.html" . -}} {{ end
-}}
+{{ range .Paginator.Pages }}
+<article class="post-list">
+    <div class="title-group">
+        <div class="title">
+            <h1><a href="{{ .RelPermalink }}">{{ .Title }}</a><a href="{{ .Params.link }}" target="_blank"><img src="/logos/github-mark.svg" style="height: 1.5rem; width: 1.5rem; margin-left: 0.5rem;"></a></h1>
+        </div>
+        <div class="date"><h5>{{ if .Params.author}}{{ .Params.author }} | {{ end }}{{ .Params.date.Format "Jan 02, 2006" }}</h5></div>
+    </div class="title-group">
+
+    <div class="content">
+        {{ .Params.desc | safeHTML }}
+		<img src="{{ .Params.banner }}">
+    </div>
+</article>
+{{ end }}
+{{- partial "pagination.html" . -}}
+{{ end }}

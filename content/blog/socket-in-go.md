@@ -5,9 +5,7 @@ tags: ["Go", "Socket Programming"]
 draft: true
 ---
 
-The usual way of making an interaction between a client and a server is that the client makes HTTP requests and a response is sent by the server. What if the browser needs a persistent connection? WebSockets is the answer.
-
-<!--more-->
+The usual way of making an interaction between a client and a server is that the client makes HTTP requests and a response is sent by the server. What if the browser needs a persistent connection? WebSockets is the answer.<!--more-->
 
 ### WebSockets Server
 
