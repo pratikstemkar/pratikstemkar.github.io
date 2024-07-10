@@ -1,0 +1,65 @@
+baseURL = 'https://pratikstemkar.github.io/'
+languageCode = 'en-us'
+title = 'Pratik Temkar'
+theme="cactus"
+
+[params]
+  colortheme = "dark" # dark, light, white, or classic
+  description = "Hugo is a general-purpose website framework. Technically speaking, Hugo is a static site generator. Unlike systems that dynamically build a page with each visitor request, Hugo builds pages when you create or update your content. Since websites are viewed far more often than they are edited, Hugo is designed to provide an optimal viewing experience for your website’s end users and an ideal writing experience for website authors."
+  mainSection = "posts"
+  mainSectionTitle = "Blog"
+  showAllPostsOnHomePage = false
+  postsOnHomePage = 5
+  tagsOverview = true
+  tocInline = true
+  showProjectsList = true
+  projectsUrl = "https://github.com/pratikstemkar"
+  googleAnalyticsAsync = true
+  rss = true
+  mathjax = true
+
+[[params.social]]
+  name = "twitter"
+  link = "https://www.x.com/pratikstemkar/"
+
+[[params.social]]
+  name = "github"
+  link = "https://github.com/pratikstemkar"
+
+[[params.social]]
+  name = "email"
+  link = "pratikstemkar@gmail.com" # no need for "mailto:" at the start
+
+[[params.social]]
+  name = "linkedin"
+  link = "https://www.linkedin.com/in/pratikstemkar/"
+
+# Main menu which appears below site header.
+[[menu.main]]
+name = "Home"
+url = "/"
+weight = 1
+
+[[menu.main]]
+name = "All posts"
+url = "/posts"
+weight = 2
+
+[[menu.main]]
+name = "Tags"
+url = "/tags"
+weight = 3
+
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = false
+    hl_Lines = ""
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    style = "monokai"
+    tabWidth = 4
+
+googleAnalytics = "G-QF832JE57H"
