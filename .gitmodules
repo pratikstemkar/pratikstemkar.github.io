@@ -1,6 +1,6 @@
 [submodule "themes/cactus"] 
-  path = themes/cactus 
-  url = https://github.com/pratikstemkar/cactus.git/
+	path = themes/cactus
+	url = https://github.com/pratikstemkar/cactus
 [submodule "cactus"]
 	path = cactus
 	url = https://github.com/pratikstemkar/cactus
