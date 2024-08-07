@@ -1,14 +1,24 @@
 {
     "list": [
         {
-            "name": "Hexo",
-            "url": "https://hexo.io/",
-            "desc": "A fast, simple & powerful blog framework"
+            "name": "ticketify",
+            "url": "https://github.com/pratikstemkar/ticketify",
+            "desc": "Real-Time Ticket Booking using Spring Boot, Next.js & PostgreSQL."
         },
         {
-            "name": "Font Awesome",
-            "url": "http://fontawesome.io/",
-            "desc": "The iconic font and CSS toolkit"
+            "name": "streamink",
+            "url": "https://streamink.vercel.app/",
+            "desc": "OTT platform built with Next.js, MongoDB & Cloudinary."
+        },
+        {
+            "name": "nexus",
+            "url": "https://github.com/pratikstemkar/nexus",
+            "desc": "Real-Time chat application using websockets, go channels. "
+        },
+        {
+            "name": "jouno",
+            "url": "https://github.com/pratikstemkar/jouno",
+            "desc": "Share travel stories, tips and tricks in a vibrant community. "
         }
     ]
 }
