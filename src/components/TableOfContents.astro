@@ -1,0 +1,72 @@
+---
+interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { headings } = Astro.props;
+const toc = headings.filter(h => h.depth <= 3);
+---
+
+{toc.length > 0 && (
+  <nav class="toc-container hidden lg:block sticky top-24">
+    <h4 class="text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-3 flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="8" y1="6" x2="21" y2="6"></line>
+        <line x1="8" y1="12" x2="21" y2="12"></line>
+        <line x1="8" y1="18" x2="21" y2="18"></line>
+        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+      </svg>
+      On this page
+    </h4>
+    <ul class="space-y-2 text-sm border-l border-neutral-200 dark:border-neutral-700">
+      {toc.map(heading => (
+        <li>
+          <a 
+            href={`#${heading.slug}`}
+            class:list={[
+              "toc-link block py-1 transition-colors duration-200",
+              "text-neutral-600 dark:text-neutral-400 hover:text-emerald-600 dark:hover:text-emerald-400",
+              heading.depth === 2 ? "pl-4" : "pl-8 text-xs"
+            ]}
+            data-heading={heading.slug}
+          >
+            {heading.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<script>
+  function initToc() {
+    const tocLinks = document.querySelectorAll('.toc-link');
+    const headings = document.querySelectorAll('article h2, article h3');
+    
+    if (tocLinks.length === 0 || headings.length === 0) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            tocLinks.forEach(link => {
+              link.classList.remove('text-emerald-600', 'dark:text-emerald-400', 'border-l-2', 'border-emerald-500', '-ml-px');
+              if (link.getAttribute('data-heading') === id) {
+                link.classList.add('text-emerald-600', 'dark:text-emerald-400', 'border-l-2', 'border-emerald-500', '-ml-px');
+              }
+            });
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -80% 0px' }
+    );
+    
+    headings.forEach(heading => observer.observe(heading));
+  }
+  
+  document.addEventListener('DOMContentLoaded', initToc);
+  document.addEventListener('astro:after-swap', initToc);
+</script>

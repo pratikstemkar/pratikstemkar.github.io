@@ -1,0 +1,95 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+import ArrowCard from "@components/ArrowCard.astro";
+import { BLOG } from "@consts";
+
+const data = (await getCollection("blog"))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+type Acc = {
+  [year: string]: CollectionEntry<"blog">[];
+}
+
+const posts = data.reduce((acc: Acc, post) => {
+    const year = post.data.date.getFullYear().toString();
+    if (!acc[year]) {
+      acc[year] = [];
+    }
+    acc[year].push(post);
+    return acc;
+  }, {});
+
+const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a)); 
+---
+
+<PageLayout title={BLOG.TITLE} description={BLOG.DESCRIPTION}>
+  <Container>
+    <div class="space-y-10">
+      <div class="animate">
+        <div class="font-semibold text-neutral-900 dark:text-white text-2xl">
+          Blog
+        </div>
+        <div class="w-12 h-1 bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full mt-2"></div>
+      </div>
+      
+      <!-- Command Palette Hint -->
+      <div class="animate">
+        <button
+          id="open-search"
+          class="w-full flex items-center gap-3 px-4 py-3 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800/50 text-neutral-500 dark:text-neutral-400 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="flex-1 text-left">Search posts...</span>
+          <kbd class="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs bg-neutral-100 dark:bg-neutral-700 rounded border border-neutral-200 dark:border-neutral-600">
+            <span>Ctrl</span><span>+</span><span>K</span>
+          </kbd>
+        </button>
+      </div>
+      
+      <!-- Posts List -->
+      <div class="space-y-4">
+        {years.map(year => (
+          <section class="animate space-y-4">
+            <div class="font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              {year}
+            </div>
+            <div>
+              <ul class="flex flex-col gap-4">
+                {posts[year].map((post) => (
+                  <li>
+                    <ArrowCard entry={post}/>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+  </Container>
+</PageLayout>
+
+<script is:inline>
+function initSearchButton() {
+  const openSearchBtn = document.getElementById('open-search');
+  openSearchBtn?.addEventListener('click', () => {
+    const palette = document.getElementById('command-palette');
+    palette?.classList.remove('hidden');
+    const search = document.getElementById('palette-search');
+    setTimeout(() => search?.focus(), 50);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initSearchButton);
+document.addEventListener('astro:after-swap', initSearchButton);
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  initSearchButton();
+}
+</script>

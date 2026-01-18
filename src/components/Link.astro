@@ -1,0 +1,19 @@
+---
+import { cn } from "@lib/utils";
+
+type Props = {
+  href: string;
+  external?: boolean;
+  underline?: boolean;
+}
+
+const { href, external, underline = true, ...rest } = Astro.props;
+---
+
+<a 
+  href={href} 
+  target={ external ? "_blank" : "_self" } 
+  class={cn("inline-block decoration-emerald-500/30 dark:decoration-emerald-400/30 hover:decoration-emerald-500/60 hover:dark:decoration-emerald-400/60 text-current hover:text-emerald-600 hover:dark:text-emerald-400 transition-colors duration-300 ease-in-out", underline && "underline underline-offset-2")}
+  {...rest}>
+  <slot/>
+</a>

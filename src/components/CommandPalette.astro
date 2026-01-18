@@ -1,0 +1,209 @@
+---
+import { getCollection } from "astro:content";
+
+const blogs = await getCollection("blog", ({ data }) => !data.draft);
+const projects = await getCollection("projects", ({ data }) => !data.draft);
+
+const items = [
+  ...blogs.map(post => ({
+    type: "blog",
+    title: post.data.title,
+    description: post.data.description,
+    url: `/blog/${post.slug}`,
+  })),
+  ...projects.map(project => ({
+    type: "project",
+    title: project.data.title,
+    description: project.data.description,
+    url: `/projects/${project.slug}`,
+  })),
+  { type: "page", title: "Home", description: "Go to homepage", url: "/" },
+  { type: "page", title: "Blog", description: "All blog posts", url: "/blog" },
+  { type: "page", title: "Projects", description: "All projects", url: "/projects" },
+  { type: "page", title: "Work", description: "Work experience", url: "/work" },
+];
+---
+
+<div id="command-palette" class="fixed inset-0 z-[100] hidden">
+  <!-- Backdrop -->
+  <div id="palette-backdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+  
+  <!-- Modal -->
+  <div class="absolute inset-0 flex items-start justify-center pt-[15vh]">
+    <div id="palette-modal" class="w-full max-w-xl mx-4 bg-white dark:bg-neutral-900 rounded-xl shadow-2xl border border-neutral-200 dark:border-neutral-700 overflow-hidden">
+      <!-- Search input -->
+      <div class="flex items-center gap-3 px-4 py-3 border-b border-neutral-200 dark:border-neutral-700">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-neutral-400">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="text" 
+          id="palette-search"
+          placeholder="Search posts, projects, pages..."
+          class="flex-1 bg-transparent outline-none text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400"
+        />
+        <kbd class="hidden sm:inline-flex items-center px-2 py-1 text-xs font-medium text-neutral-500 bg-neutral-100 dark:bg-neutral-800 rounded">
+          ESC
+        </kbd>
+      </div>
+      
+      <!-- Results -->
+      <div id="palette-results" class="max-h-80 overflow-y-auto py-2">
+        <!-- Results will be populated by JS -->
+      </div>
+      
+      <!-- Footer -->
+      <div class="flex items-center justify-between px-4 py-2 text-xs text-neutral-500 border-t border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800/50">
+        <div class="flex items-center gap-4">
+          <span class="flex items-center gap-1">
+            <kbd class="px-1.5 py-0.5 bg-neutral-200 dark:bg-neutral-700 rounded">↑↓</kbd>
+            navigate
+          </span>
+          <span class="flex items-center gap-1">
+            <kbd class="px-1.5 py-0.5 bg-neutral-200 dark:bg-neutral-700 rounded">↵</kbd>
+            select
+          </span>
+        </div>
+        <span class="flex items-center gap-1">
+          <kbd class="px-1.5 py-0.5 bg-neutral-200 dark:bg-neutral-700 rounded">Ctrl+K</kbd>
+          to toggle
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ items }}>
+  let selectedIndex = 0;
+  let filteredItems = items;
+  
+  function initCommandPalette() {
+    const palette = document.getElementById('command-palette');
+    const backdrop = document.getElementById('palette-backdrop');
+    const search = document.getElementById('palette-search');
+    const results = document.getElementById('palette-results');
+    
+    if (!palette || !search || !results) return;
+    
+    function openPalette() {
+      palette.classList.remove('hidden');
+      search.value = '';
+      selectedIndex = 0;
+      filterItems('');
+      setTimeout(() => search.focus(), 50);
+    }
+    
+    function closePalette() {
+      palette.classList.add('hidden');
+    }
+    
+    function filterItems(query) {
+      const q = query.toLowerCase();
+      filteredItems = q === '' 
+        ? items 
+        : items.filter(item => 
+            item.title.toLowerCase().includes(q) || 
+            item.description.toLowerCase().includes(q)
+          );
+      selectedIndex = 0;
+      renderResults();
+    }
+    
+    function renderResults() {
+      if (filteredItems.length === 0) {
+        results.innerHTML = `
+          <div class="px-4 py-8 text-center text-neutral-500">
+            No results found
+          </div>
+        `;
+        return;
+      }
+      
+      results.innerHTML = filteredItems.map((item, i) => `
+        <a 
+          href="${item.url}"
+          data-index="${i}"
+          class="palette-item flex items-center gap-3 px-4 py-2 mx-2 rounded-lg cursor-pointer transition-colors ${
+            i === selectedIndex 
+              ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300' 
+              : 'hover:bg-neutral-100 dark:hover:bg-neutral-800'
+          }"
+        >
+          <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg ${
+            item.type === 'blog' 
+              ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+              : item.type === 'project'
+              ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400'
+              : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400'
+          }">
+            ${item.type === 'blog' 
+              ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>'
+              : item.type === 'project'
+              ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>'
+              : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>'
+            }
+          </span>
+          <div class="flex-1 min-w-0">
+            <div class="font-medium text-neutral-900 dark:text-neutral-100 truncate">${item.title}</div>
+            <div class="text-sm text-neutral-500 truncate">${item.description}</div>
+          </div>
+          <span class="text-xs px-2 py-0.5 rounded-full ${
+            item.type === 'blog' 
+              ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+              : item.type === 'project'
+              ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400'
+              : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-500'
+          }">
+            ${item.type}
+          </span>
+        </a>
+      `).join('');
+    }
+    
+    function navigate(direction) {
+      if (filteredItems.length === 0) return;
+      selectedIndex = (selectedIndex + direction + filteredItems.length) % filteredItems.length;
+      renderResults();
+      const selected = results.querySelector(`[data-index="${selectedIndex}"]`);
+      selected?.scrollIntoView({ block: 'nearest' });
+    }
+    
+    function selectItem() {
+      if (filteredItems[selectedIndex]) {
+        window.location.href = filteredItems[selectedIndex].url;
+      }
+    }
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        palette.classList.contains('hidden') ? openPalette() : closePalette();
+      }
+      
+      if (!palette.classList.contains('hidden')) {
+        if (e.key === 'Escape') closePalette();
+        if (e.key === 'ArrowDown') { e.preventDefault(); navigate(1); }
+        if (e.key === 'ArrowUp') { e.preventDefault(); navigate(-1); }
+        if (e.key === 'Enter') { e.preventDefault(); selectItem(); }
+      }
+    });
+    
+    search.addEventListener('input', (e) => filterItems(e.target.value));
+    
+    // Close when clicking outside the modal
+    palette.addEventListener('click', (e) => {
+      const modal = document.getElementById('palette-modal');
+      if (modal && !modal.contains(e.target)) {
+        closePalette();
+      }
+    });
+    
+    // Initial render
+    filterItems('');
+  }
+  
+  document.addEventListener('DOMContentLoaded', initCommandPalette);
+  document.addEventListener('astro:after-swap', initCommandPalette);
+</script>

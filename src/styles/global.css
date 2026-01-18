@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --tw-prose-code-bg: rgba(0, 0, 0, 0.05);
+  --cursor-glow-x: 50%;
+  --cursor-glow-y: 50%;
+}
+
+.dark {
+  --tw-prose-code-bg: rgba(255, 255, 255, 0.1);
+}
+
+/* Cursor glow effect */
+.cursor-glow {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  background: radial-gradient(600px circle at var(--cursor-glow-x) var(--cursor-glow-y),
+      rgba(16, 185, 129, 0.15),
+      transparent 40%);
+  transition: opacity 0.3s ease;
+}
+
+.dark .cursor-glow {
+  background: radial-gradient(600px circle at var(--cursor-glow-x) var(--cursor-glow-y),
+      rgba(52, 211, 153, 0.2),
+      transparent 40%);
+}
+
+html {
+  overflow-y: scroll;
+  color-scheme: light;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+html,
+body {
+  @apply size-full;
+}
+
+body {
+  @apply font-sans antialiased;
+  @apply flex flex-col;
+  @apply bg-neutral-50 dark:bg-neutral-900;
+  @apply text-neutral-600 dark:text-neutral-300;
+}
+
+header {
+  @apply fixed top-0 left-0 right-0 z-50 py-5;
+  @apply bg-neutral-50/80 dark:bg-neutral-900/80;
+  @apply backdrop-blur-md saturate-150;
+  @apply border-b border-transparent;
+}
+
+html.scrolled header {
+  @apply border-neutral-200/50 dark:border-neutral-700/50;
+}
+
+main {
+  @apply flex-1 py-32;
+}
+
+footer {
+  @apply py-5 text-sm;
+}
+
+article {
+  @apply max-w-full prose prose-lg dark:prose-invert;
+  @apply prose-img:mx-auto prose-img:my-auto prose-img:rounded-xl prose-img:shadow-lg;
+  @apply prose-headings:font-bold prose-headings:tracking-tight;
+  @apply prose-headings:text-neutral-900 dark:prose-headings:text-neutral-50;
+  @apply prose-p:text-neutral-700 dark:prose-p:text-neutral-300 prose-p:leading-relaxed;
+  @apply prose-li:text-neutral-700 dark:prose-li:text-neutral-300;
+  @apply prose-strong:text-neutral-900 dark:prose-strong:text-neutral-50 prose-strong:font-semibold;
+  @apply prose-code:font-mono prose-code:text-sm prose-code:px-1.5 prose-code:py-0.5;
+  @apply prose-code:bg-neutral-100 dark:prose-code:bg-neutral-800 prose-code:rounded;
+  @apply prose-code:before:content-none prose-code:after:content-none;
+  @apply prose-pre:bg-neutral-800 dark:prose-pre:bg-neutral-900;
+  @apply prose-blockquote:border-l-4 prose-blockquote:border-l-emerald-500;
+  @apply prose-blockquote:bg-emerald-50/50 dark:prose-blockquote:bg-emerald-900/20;
+  @apply prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:rounded-r-xl;
+  @apply prose-blockquote:italic prose-blockquote:text-neutral-700 dark:prose-blockquote:text-neutral-300;
+  @apply prose-hr:border-neutral-200 dark:prose-hr:border-neutral-700;
+  @apply prose-ul:list-disc prose-ol:list-decimal;
+  @apply prose-li:marker:text-emerald-500;
+  @apply prose-h2:mt-12 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-neutral-200 dark:prose-h2:border-neutral-700;
+  @apply prose-h3:mt-8 prose-h3:mb-3;
+  @apply prose-h4:mt-6 prose-h4:mb-2;
+}
+
+/* Fancy horizontal rule */
+article hr {
+  @apply my-12 border-none h-px;
+  background: linear-gradient(to right, transparent, theme('colors.emerald.500'), transparent);
+}
+
+/* Code blocks - clean, simple style */
+article pre,
+article pre[class*="astro-code"],
+article .astro-code {
+  @apply relative my-6 overflow-hidden;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 0 !important;
+  background: #1e1e1e !important;
+}
+
+article pre code,
+article .astro-code code {
+  @apply block overflow-x-auto text-sm;
+  padding: 1rem !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+/* Copy button for code blocks */
+.copy-code-btn {
+  @apply absolute top-2 right-2 px-2 py-1 text-xs rounded;
+  @apply bg-neutral-700 hover:bg-neutral-600 text-neutral-300 hover:text-white;
+  @apply opacity-0 transition-opacity duration-200;
+}
+
+article pre:hover .copy-code-btn {
+  @apply opacity-100;
+}
+
+.copy-code-btn.copied {
+  @apply bg-emerald-600 text-white opacity-100;
+}
+
+@layer utilities {
+  article a {
+    @apply font-sans text-emerald-600 dark:text-emerald-400 underline underline-offset-2;
+    @apply decoration-emerald-500/30 dark:decoration-emerald-400/30;
+    @apply transition-colors duration-300 ease-in-out;
+  }
+
+  article a:hover {
+    @apply text-emerald-700 dark:text-emerald-300;
+    @apply decoration-emerald-500/60 dark:decoration-emerald-400/60;
+  }
+
+
+}
+
+/* Callout/note boxes for markdown */
+article .note,
+article .tip,
+article .warning {
+  @apply p-4 rounded-xl my-6 border-l-4;
+}
+
+article .note {
+  @apply bg-blue-50 dark:bg-blue-900/20 border-l-blue-500;
+}
+
+article .tip {
+  @apply bg-emerald-50 dark:bg-emerald-900/20 border-l-emerald-500;
+}
+
+article .warning {
+  @apply bg-amber-50 dark:bg-amber-900/20 border-l-amber-500;
+}
+
+.animate {
+  @apply opacity-0 translate-y-3;
+  @apply transition-all duration-700 ease-out;
+}
+
+.animate.show {
+  @apply opacity-100 translate-y-0;
+}
+
+html #back-to-top {
+  @apply opacity-0 pointer-events-none;
+}
+
+html.scrolled #back-to-top {
+  @apply opacity-100 pointer-events-auto;
+}

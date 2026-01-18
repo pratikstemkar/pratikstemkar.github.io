@@ -1,0 +1,78 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+import FormattedDate from "@components/FormattedDate.astro";
+import { readingTime } from "@lib/utils";
+import BackToPrev from "@components/BackToPrev.astro";
+import Link from "@components/Link.astro";
+
+export async function getStaticPaths() {
+  const projects = (await getCollection("projects"))
+    .filter(post => !post.data.draft)
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: project,
+  }));
+}
+type Props = CollectionEntry<"projects">;
+
+const project = Astro.props;
+const { Content } = await project.render();
+---
+
+<PageLayout title={project.data.title} description={project.data.description}>
+  <Container>
+    <div class="animate">
+      <BackToPrev href="/projects">
+        Back to projects
+      </BackToPrev>
+    </div>
+    <div class="space-y-1 my-10">
+      <div class="animate flex items-center gap-1.5">
+        <div class="font-base text-sm">
+          <FormattedDate date={project.data.date} />
+        </div>
+        &bull;
+        <div class="font-base text-sm">
+          {readingTime(project.body)}
+        </div>
+      </div>
+      <div class="animate flex items-center justify-between gap-4">
+        <div class="text-2xl font-semibold text-neutral-900 dark:text-white">
+          {project.data.title}
+        </div>
+        {(project.data.demoURL || project.data.repoURL) && (
+          <nav class="flex gap-2">
+            {project.data.demoURL && (
+              <Link href={project.data.demoURL} external>
+                demo
+              </Link>
+            )}
+            {project.data.demoURL && project.data.repoURL && (
+              <span class="text-neutral-400">/</span>
+            )}
+            {project.data.repoURL && (
+              <Link href={project.data.repoURL} external>
+                github
+              </Link>
+            )}
+          </nav>
+        )}
+      </div>
+      {project.data.technologies && project.data.technologies.length > 0 && (
+        <div class="animate flex flex-wrap gap-2 mt-4">
+          {project.data.technologies.map(tech => (
+            <span class="px-3 py-1 text-xs font-medium rounded-full bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+              {tech}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+    <article class="animate">
+      <Content />
+    </article>
+  </Container>
+</PageLayout>

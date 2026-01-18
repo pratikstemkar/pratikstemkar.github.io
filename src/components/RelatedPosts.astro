@@ -1,0 +1,56 @@
+---
+import { getCollection } from "astro:content";
+import FormattedDate from "./FormattedDate.astro";
+
+interface Props {
+  currentSlug: string;
+  currentTags: string[];
+  limit?: number;
+}
+
+const { currentSlug, currentTags, limit = 3 } = Astro.props;
+
+const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+
+// Find related posts based on matching tags
+const relatedPosts = allPosts
+  .filter(post => post.slug !== currentSlug)
+  .map(post => {
+    const matchingTags = post.data.tags?.filter(tag => currentTags.includes(tag)) || [];
+    return { post, score: matchingTags.length };
+  })
+  .filter(item => item.score > 0)
+  .sort((a, b) => b.score - a.score)
+  .slice(0, limit)
+  .map(item => item.post);
+---
+
+{relatedPosts.length > 0 && (
+  <div class="mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-700">
+    <h3 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4 flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+      </svg>
+      Related Posts
+    </h3>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {relatedPosts.map(post => (
+        <a 
+          href={`/blog/${post.slug}`}
+          class="group block p-4 rounded-lg border border-neutral-200 dark:border-neutral-700 hover:border-emerald-500 dark:hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/10 transition-all duration-200"
+        >
+          <div class="text-xs text-neutral-500 dark:text-neutral-400 mb-1">
+            <FormattedDate date={post.data.date} />
+          </div>
+          <h4 class="font-medium text-neutral-900 dark:text-neutral-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-2">
+            {post.data.title}
+          </h4>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1 line-clamp-2">
+            {post.data.description}
+          </p>
+        </a>
+      ))}
+    </div>
+  </div>
+)}

@@ -1,0 +1,44 @@
+---
+import { SOCIALS } from "@consts";
+
+const twitterSocial = SOCIALS.find(s => s.NAME === "twitter-x");
+const twitterUrl = twitterSocial?.HREF || "https://twitter.com";
+---
+
+<div class="mt-16 pt-8 border-t border-neutral-200 dark:border-neutral-700">
+  <div class="flex items-start gap-4 p-6 rounded-xl bg-gradient-to-br from-neutral-100 to-neutral-50 dark:from-neutral-800 dark:to-neutral-900 border border-neutral-200 dark:border-neutral-700">
+    <div class="flex-shrink-0">
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="28" 
+        height="28" 
+        viewBox="0 0 24 24" 
+        fill="currentColor"
+        class="text-neutral-800 dark:text-neutral-100"
+      >
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+    </div>
+    <div class="flex-1">
+      <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-100 mb-2">
+        Got thoughts or feedback?
+      </h3>
+      <p class="text-neutral-600 dark:text-neutral-400 text-base leading-relaxed mb-4" style="font-family: 'Roboto', sans-serif;">
+        I'd love to hear from you! Feel free to reach out on X (Twitter) if you have any comments, 
+        questions, or just want to chat about the topics covered in this post.
+      </p>
+      <a 
+        href={twitterUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-neutral-800 dark:bg-neutral-100 text-white dark:text-neutral-900 hover:bg-neutral-700 dark:hover:bg-neutral-200 transition-colors duration-200"
+      >
+        Connect on X
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 17L17 7"/>
+          <path d="M7 7h10v10"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>

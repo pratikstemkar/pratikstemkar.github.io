@@ -1,0 +1,76 @@
+---
+import { getCollection } from "astro:content";
+
+interface Props {
+  series: string;
+  currentSlug: string;
+  currentOrder: number;
+}
+
+const { series, currentSlug, currentOrder } = Astro.props;
+
+const allPosts = await getCollection("blog", ({ data }) => 
+  !data.draft && data.series === series
+);
+
+const seriesPosts = allPosts
+  .sort((a, b) => (a.data.seriesOrder || 0) - (b.data.seriesOrder || 0));
+
+const currentIndex = seriesPosts.findIndex(p => p.slug === currentSlug);
+const prevPost = currentIndex > 0 ? seriesPosts[currentIndex - 1] : null;
+const nextPost = currentIndex < seriesPosts.length - 1 ? seriesPosts[currentIndex + 1] : null;
+---
+
+<div class="my-8 p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-neutral-50 dark:from-emerald-900/20 dark:to-neutral-800/50 border border-emerald-200 dark:border-emerald-800">
+  <div class="flex items-center justify-between mb-3">
+    <div class="flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        <line x1="12" y1="6" x2="12" y2="10"></line>
+        <line x1="12" y1="14" x2="12" y2="18"></line>
+      </svg>
+      <span class="text-sm font-semibold text-emerald-700 dark:text-emerald-300">
+        {series}
+      </span>
+    </div>
+    <span class="text-xs text-neutral-600 dark:text-neutral-400 bg-white dark:bg-neutral-800 px-2 py-1 rounded-full">
+      Part {currentOrder} of {seriesPosts.length}
+    </span>
+  </div>
+  
+  <!-- Progress bar -->
+  <div class="h-1.5 bg-neutral-200 dark:bg-neutral-700 rounded-full mb-4 overflow-hidden">
+    <div 
+      class="h-full bg-emerald-500 rounded-full transition-all duration-300"
+      style={`width: ${(currentOrder / seriesPosts.length) * 100}%`}
+    ></div>
+  </div>
+  
+  <!-- Navigation -->
+  <div class="flex items-center justify-between gap-4">
+    {prevPost ? (
+      <a 
+        href={`/blog/${prevPost.slug}`}
+        class="flex-1 group flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:-translate-x-1 transition-transform">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <span class="truncate">{prevPost.data.title}</span>
+      </a>
+    ) : <div class="flex-1"></div>}
+    
+    {nextPost ? (
+      <a 
+        href={`/blog/${nextPost.slug}`}
+        class="flex-1 group flex items-center justify-end gap-2 text-sm text-neutral-600 dark:text-neutral-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors text-right"
+      >
+        <span class="truncate">{nextPost.data.title}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+    ) : <div class="flex-1"></div>}
+  </div>
+</div>

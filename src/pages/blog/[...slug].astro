@@ -1,0 +1,130 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+import FormattedDate from "@components/FormattedDate.astro";
+import { readingTime } from "@lib/utils";
+import BackToPrev from "@components/BackToPrev.astro";
+import ShareButtons from "@components/ShareButtons.astro";
+import ConnectCTA from "@components/ConnectCTA.astro";
+import ReadingProgress from "@components/ReadingProgress.astro";
+import TableOfContents from "@components/TableOfContents.astro";
+import SeriesNav from "@components/SeriesNav.astro";
+import PostNavigation from "@components/PostNavigation.astro";
+import { SITE } from "@consts";
+
+export async function getStaticPaths() {
+  const posts = (await getCollection("blog"))
+    .filter(post => !post.data.draft)
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+type Props = CollectionEntry<"blog">;
+
+const post = Astro.props;
+const { Content, headings } = await post.render();
+const currentUrl = Astro.url.href;
+const ogImage = `/og/${post.slug}.png`;
+
+// JSON-LD structured data for SEO
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.data.title,
+  "description": post.data.description,
+  "datePublished": post.data.date.toISOString(),
+  "author": {
+    "@type": "Person",
+    "name": SITE.NAME,
+    "url": Astro.site
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": SITE.NAME
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": currentUrl
+  }
+};
+---
+
+<PageLayout title={post.data.title} description={post.data.description} image={ogImage}>
+  <!-- Reading Progress Bar -->
+  <ReadingProgress />
+  
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  
+  <Container>
+    <div class="animate">
+      <BackToPrev href="/blog">
+        Back to blog
+      </BackToPrev>
+    </div>
+    <div class="space-y-1 my-10">
+      <div class="animate flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+        <div class="font-medium text-sm">
+          <FormattedDate date={post.data.date} />
+        </div>
+        <span class="text-neutral-400 dark:text-neutral-500">&bull;</span>
+        <div class="font-medium text-sm">
+          {readingTime(post.body)}
+        </div>
+      </div>
+      <h1 class="animate text-3xl font-bold text-neutral-900 dark:text-white">
+        {post.data.title}
+      </h1>
+      {post.data.tags && post.data.tags.length > 0 && (
+        <div class="animate flex flex-wrap gap-2 mt-4">
+          {post.data.tags.map(tag => (
+            <span class="px-3 py-1 text-xs font-medium rounded-full bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+    
+    <!-- Series Navigation (if part of a series) -->
+    {post.data.series && post.data.seriesOrder && (
+      <div class="animate">
+        <SeriesNav 
+          series={post.data.series} 
+          currentSlug={post.slug} 
+          currentOrder={post.data.seriesOrder} 
+        />
+      </div>
+    )}
+    
+    <!-- Main content with Table of Contents -->
+    <div class="lg:grid lg:grid-cols-[1fr_200px] lg:gap-8">
+      <article class="animate">
+        <Content />
+      </article>
+      
+      <!-- Table of Contents (desktop sidebar) -->
+      <aside class="hidden lg:block">
+        <TableOfContents headings={headings} />
+      </aside>
+    </div>
+    
+    <!-- Previous/Next Post Navigation -->
+    <div class="animate">
+      <PostNavigation currentSlug={post.slug} />
+    </div>
+    
+    <!-- Connect CTA -->
+    <div class="animate">
+      <ConnectCTA />
+    </div>
+    
+    <!-- Share Buttons -->
+    <div class="animate">
+      <ShareButtons title={post.data.title} url={currentUrl} />
+    </div>
+  </Container>
+</PageLayout>
