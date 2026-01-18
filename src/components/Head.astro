@@ -77,7 +77,7 @@ const { title, description, image = "/nano.png" } = Astro.props;
 <link rel="alternate" type="application/rss+xml" title={SITE.NAME} href={new URL("rss.xml", Astro.site)} />
 
 <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XDPKQN6WD6"></script>
+<script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-XDPKQN6WD6"></script>
 <script is:inline>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}

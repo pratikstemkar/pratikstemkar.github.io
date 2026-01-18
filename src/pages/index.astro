@@ -39,7 +39,7 @@ const jsonLd = {
 ---
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
-  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <Container>
     <h4 class="animate font-semibold text-neutral-900 dark:text-white">
       Hi, I'm Pratik <span class="text-xl">👋🏻</span> 

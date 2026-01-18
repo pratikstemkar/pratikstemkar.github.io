@@ -1,7 +1,7 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
 import PageLayout from "@layouts/PageLayout.astro";
-import Container from "@components/Container.astro";
+// Container import removed
 import FormattedDate from "@components/FormattedDate.astro";
 import { readingTime } from "@lib/utils";
 import BackToPrev from "@components/BackToPrev.astro";
@@ -57,7 +57,7 @@ const jsonLd = {
   <ReadingProgress />
   
   <!-- JSON-LD Structured Data -->
-  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   
   <div class="mx-auto max-w-screen-lg px-5">
     <div class="max-w-[640px] mx-auto">
@@ -97,7 +97,7 @@ const jsonLd = {
         <SeriesNav 
           series={post.data.series} 
           currentSlug={post.slug}
-          currentOrder={post.data.seriesOrder}
+          currentOrder={post.data.seriesOrder ?? 0}
         />
       </div>
     )}
@@ -119,7 +119,6 @@ const jsonLd = {
           <div class="mt-8 pb-8">
              <ShareButtons 
                 title={post.data.title}
-                description={post.data.description}
                 url={currentUrl}
               />
           </div>

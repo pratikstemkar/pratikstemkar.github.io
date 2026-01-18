@@ -74,13 +74,13 @@ const items = [
   </div>
 </div>
 
-<script define:vars={{ items }}>
+<script is:inline define:vars={{ items }}>
   let selectedIndex = 0;
   let filteredItems = items;
   
   function initCommandPalette() {
     const palette = document.getElementById('command-palette');
-    const backdrop = document.getElementById('palette-backdrop');
+    // backdrop removed
     const search = document.getElementById('palette-search');
     const results = document.getElementById('palette-results');
     
