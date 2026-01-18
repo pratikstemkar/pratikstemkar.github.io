@@ -4,6 +4,7 @@ description: "Learn how to use Content Collections for type-safe content managem
 date: "Jan 17 2026"
 tags: ["astro", "content", "tutorial"]
 series: "Learning Astro"
+visible: false
 seriesOrder: 3
 ---
 

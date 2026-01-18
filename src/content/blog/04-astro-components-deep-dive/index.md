@@ -4,6 +4,7 @@ description: "Master Astro components - from basic syntax to advanced patterns f
 date: "Jan 16 2026"
 tags: ["astro", "components", "tutorial"]
 series: "Learning Astro"
+visible: false
 seriesOrder: 2
 ---
 

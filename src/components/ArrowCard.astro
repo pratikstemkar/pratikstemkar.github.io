@@ -9,12 +9,27 @@ const { entry } = Astro.props;
 const tags = 'tags' in entry.data ? entry.data.tags : undefined;
 const technologies = 'technologies' in entry.data ? entry.data.technologies : undefined;
 const displayTags = tags || technologies;
+const isDraft = entry.data.draft;
+const Component = isDraft ? "div" : "a";
+const href = isDraft ? undefined : `/${entry.collection}/${entry.slug}`;
 ---
 
-<a href={`/${entry.collection}/${entry.slug}`} class="relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-neutral-200 dark:border-neutral-700 hover:border-emerald-500 dark:hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/10 transition-colors duration-300 ease-in-out">
+<Component 
+  href={href} 
+  class={`relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-neutral-200 dark:border-neutral-700 transition-colors duration-300 ease-in-out ${
+    isDraft 
+      ? "bg-neutral-50 dark:bg-neutral-800/20 cursor-not-allowed opacity-60" 
+      : "hover:border-emerald-500 dark:hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/10"
+  }`}
+>
   <div class="flex flex-col flex-1 truncate gap-1">
-    <div class="font-semibold text-neutral-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+    <div class={`font-semibold text-neutral-900 dark:text-white transition-colors ${!isDraft && "group-hover:text-emerald-600 dark:group-hover:text-emerald-400"}`}>
       {entry.data.title}
+      {isDraft && (
+        <span class="ml-2 inline-block text-[10px] uppercase tracking-wider font-medium px-2 py-0.5 rounded-full bg-neutral-200 dark:bg-neutral-700 text-neutral-500 dark:text-neutral-400 border border-neutral-300 dark:border-neutral-600">
+          Coming Soon
+        </span>
+      )}
     </div>
     <div class="text-sm text-neutral-600 dark:text-neutral-400">
       {entry.data.description}
@@ -29,12 +44,14 @@ const displayTags = tags || technologies;
       </div>
     )}
   </div>
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    viewBox="0 0 24 24"
-    class="absolute top-1/2 right-2 -translate-y-1/2 size-5 stroke-2 fill-none stroke-current group-hover:stroke-emerald-500">
-    <line x1="5" y1="12" x2="19" y2="12" class="translate-x-3 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out" />
-    <polyline points="12 5 19 12 12 19" class="-translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out" />
-  </svg>
-</a>
+  {!isDraft && (
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 24 24"
+      class="absolute top-1/2 right-2 -translate-y-1/2 size-5 stroke-2 fill-none stroke-current group-hover:stroke-emerald-500">
+      <line x1="5" y1="12" x2="19" y2="12" class="translate-x-3 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out" />
+      <polyline points="12 5 19 12 12 19" class="-translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out" />
+    </svg>
+  )}
+</Component>
 

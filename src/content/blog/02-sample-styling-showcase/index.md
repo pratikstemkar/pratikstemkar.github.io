@@ -2,6 +2,7 @@
 title: "Sample Blog Post - Styling Showcase"
 description: "A comprehensive sample blog post demonstrating all the beautiful styling features of this blog."
 date: "Jan 18 2026"
+visible: false
 tags: ["sample", "design", "showcase"]
 ---
 

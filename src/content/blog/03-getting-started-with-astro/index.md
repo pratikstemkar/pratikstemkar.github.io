@@ -4,6 +4,7 @@ description: "A beginner's guide to building fast websites with Astro - the mode
 date: "Jan 15 2026"
 tags: ["astro", "web-dev", "tutorial"]
 series: "Learning Astro"
+visible: false
 seriesOrder: 1
 ---
 

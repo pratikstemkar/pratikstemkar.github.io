@@ -154,6 +154,15 @@ article pre:hover .copy-code-btn {
   }
 
 
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* Callout/note boxes for markdown */

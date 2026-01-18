@@ -59,72 +59,82 @@ const jsonLd = {
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   
-  <Container>
-    <div class="animate">
-      <BackToPrev href="/blog">
-        Back to blog
-      </BackToPrev>
-    </div>
-    <div class="space-y-1 my-10">
-      <div class="animate flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
-        <div class="font-medium text-sm">
-          <FormattedDate date={post.data.date} />
-        </div>
-        <span class="text-neutral-400 dark:text-neutral-500">&bull;</span>
-        <div class="font-medium text-sm">
-          {readingTime(post.body)}
-        </div>
-      </div>
-      <h1 class="animate text-3xl font-bold text-neutral-900 dark:text-white">
-        {post.data.title}
-      </h1>
-      {post.data.tags && post.data.tags.length > 0 && (
-        <div class="animate flex flex-wrap gap-2 mt-4">
-          {post.data.tags.map(tag => (
-            <span class="px-3 py-1 text-xs font-medium rounded-full bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
-    </div>
-    
-    <!-- Series Navigation (if part of a series) -->
-    {post.data.series && post.data.seriesOrder && (
+  <div class="mx-auto max-w-screen-lg px-5">
+    <div class="max-w-[640px] mx-auto">
       <div class="animate">
+        <BackToPrev href="/blog">
+          Back to blog
+        </BackToPrev>
+      </div>
+      <div class="space-y-1 my-10">
+        <div class="animate flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+          <div class="font-medium text-sm">
+            <FormattedDate date={post.data.date} />
+          </div>
+          <span class="text-neutral-400 dark:text-neutral-500">&bull;</span>
+          <div class="font-medium text-sm">
+            {readingTime(post.body)}
+          </div>
+        </div>
+        <h1 class="animate text-3xl font-bold text-neutral-900 dark:text-white">
+          {post.data.title}
+        </h1>
+        {post.data.tags && post.data.tags.length > 0 && (
+          <div class="animate flex flex-wrap gap-2 mt-4">
+            {post.data.tags.map(tag => (
+              <span class="px-3 py-1 text-xs font-medium rounded-full bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+
+    <!-- Series Navigation -->
+    {post.data.series && (
+      <div class="animate max-w-[640px] mx-auto">
         <SeriesNav 
           series={post.data.series} 
-          currentSlug={post.slug} 
-          currentOrder={post.data.seriesOrder} 
+          currentSlug={post.slug}
+          currentOrder={post.data.seriesOrder}
         />
       </div>
     )}
     
     <!-- Main content with Table of Contents -->
-    <div class="lg:grid lg:grid-cols-[1fr_200px] lg:gap-8">
-      <article class="animate">
-        <Content />
-      </article>
+    <!-- Main content with Table of Contents -->
+    <div class="relative mt-12">
+      <!-- Article Content - Centered -->
+      <div class="max-w-[640px] mx-auto">
+        <article class="animate">
+          <Content />
+        </article>
+      </div>
       
-      <!-- Table of Contents (desktop sidebar) -->
-      <aside class="hidden lg:block">
-        <TableOfContents headings={headings} />
+      <!-- Table of Contents (desktop sidebar) - Absolutely positioned to the right -->
+      <aside class="hidden xl:block absolute top-0 -right-[244px] h-full w-[220px]">
+        <div class="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-4 scrollbar-hide">
+          <TableOfContents headings={headings} />
+          <div class="mt-8 pb-8">
+             <ShareButtons 
+                title={post.data.title}
+                description={post.data.description}
+                url={currentUrl}
+              />
+          </div>
+        </div>
       </aside>
     </div>
     
     <!-- Previous/Next Post Navigation -->
-    <div class="animate">
+    <div class="max-w-[640px] mx-auto mt-12">
       <PostNavigation currentSlug={post.slug} />
+
+      <!-- Connect CTA -->
+      <div class="animate mt-12">
+        <ConnectCTA />
+      </div>
     </div>
-    
-    <!-- Connect CTA -->
-    <div class="animate">
-      <ConnectCTA />
-    </div>
-    
-    <!-- Share Buttons -->
-    <div class="animate">
-      <ShareButtons title={post.data.title} url={currentUrl} />
-    </div>
-  </Container>
+  </div>
 </PageLayout>
