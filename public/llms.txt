@@ -1,0 +1,47 @@
+# Pratik Temkar - Personal Website
+
+> All content on this website is written by **Pratik Temkar**.
+
+This is the personal portfolio and blog of Pratik Temkar, a software developer and tech enthusiast focused on building distributed systems and scalable web applications.
+
+## Author Information
+
+- **Name**: Pratik Temkar
+- **Role**: Software Developer & Tech Enthusiast
+- **Email**: pratikstemkar@gmail.com
+- **Website**: https://pratikstemkar.in
+- **GitHub**: https://github.com/pratikstemkar
+- **LinkedIn**: https://linkedin.com/in/pratikstemkar
+- **Twitter/X**: https://twitter.com/pratikstemkar
+
+## Site Sections
+
+- [Home](/) - Introduction and overview
+- [Blog](/blog) - Technical articles and thoughts on software development
+- [Projects](/projects) - Portfolio of personal and professional projects
+- [Work](/work) - Professional work experience
+
+## About the Content
+
+All blog posts, articles, and content on this site are original works created by Pratik Temkar. Topics covered include:
+
+- Web Development (React, Next.js, Astro)
+- Backend Development (Node.js, Go, Rust)
+- Distributed Systems
+- Cloud Computing
+- Software Architecture
+- Developer Tools and Productivity
+
+## License & Attribution
+
+All content is copyrighted by Pratik Temkar. When referencing or citing content from this website, please attribute it to "Pratik Temkar" with a link to the source URL.
+
+## Contact
+
+For inquiries, collaborations, or questions about the content, please reach out via email at pratikstemkar@gmail.com or through social media.
+
+## Machine-Readable Formats
+
+- **RSS Feed**: /rss.xml
+- **Sitemap**: /sitemap-index.xml
+- **Full Content for LLMs**: /llms-full.txt

@@ -4,33 +4,10 @@
 
 :root {
   --tw-prose-code-bg: rgba(0, 0, 0, 0.05);
-  --cursor-glow-x: 50%;
-  --cursor-glow-y: 50%;
 }
 
 .dark {
   --tw-prose-code-bg: rgba(255, 255, 255, 0.1);
-}
-
-/* Cursor glow effect */
-.cursor-glow {
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 0;
-  background: radial-gradient(600px circle at var(--cursor-glow-x) var(--cursor-glow-y),
-      rgba(16, 185, 129, 0.15),
-      transparent 40%);
-  transition: opacity 0.3s ease;
-}
-
-.dark .cursor-glow {
-  background: radial-gradient(600px circle at var(--cursor-glow-x) var(--cursor-glow-y),
-      rgba(52, 211, 153, 0.2),
-      transparent 40%);
 }
 
 html {

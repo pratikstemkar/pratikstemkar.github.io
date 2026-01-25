@@ -1,4 +1,47 @@
+# robots.txt for pratikstemkar.in
+# Author: Pratik Temkar
+
+# Allow all crawlers including AI/LLM crawlers
 User-agent: *
 Allow: /
 
-Sitemap: https://pratikstemkar.github.io/sitemap-index.xml
+# Explicitly allow AI/LLM crawlers for training and indexing
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Anthropic-AI
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Cohere-AI
+Allow: /
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+# Sitemap location
+Sitemap: https://pratikstemkar.in/sitemap-index.xml
+
+# LLM-friendly content
+# See /llms.txt for structured site information for AI systems
+# See /llms-full.txt for complete content export

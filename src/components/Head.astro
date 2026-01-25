@@ -24,7 +24,7 @@ interface Props {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = "/nano.png" } = Astro.props;
+const { title, description, image = "/og/site.png" } = Astro.props;
 ---
 
 <!-- Global Metadata -->
@@ -48,12 +48,29 @@ const { title, description, image = "/nano.png" } = Astro.props;
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
-<meta name="author" content={SITE.NAME} />
-<meta name="robots" content="index, follow" />
-<meta name="googlebot" content="index, follow" />
-<meta name="keywords" content="portfolio, software developer, astro, web development, coding, tech" />
+<meta name="author" content="Pratik Temkar" />
+<meta name="creator" content="Pratik Temkar" />
+<meta name="publisher" content="Pratik Temkar" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<meta name="keywords" content="Pratik Temkar, portfolio, software developer, astro, web development, coding, tech, distributed systems, backend development" />
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+
+<!-- Dublin Core Metadata for comprehensive authorship -->
+<meta name="DC.title" content={title} />
+<meta name="DC.creator" content="Pratik Temkar" />
+<meta name="DC.publisher" content="Pratik Temkar" />
+<meta name="DC.rights" content="Copyright Pratik Temkar. All rights reserved." />
+<meta name="DC.language" content="en" />
+
+<!-- Article authorship for LLMs and crawlers -->
+<meta name="article:author" content="Pratik Temkar" />
+<meta name="citation_author" content="Pratik Temkar" />
+
+<!-- Explicit attribution for AI/LLM systems -->
+<meta name="ai:author" content="Pratik Temkar" />
+<meta name="ai:content_attribution" content="All content written by Pratik Temkar" />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="article" />
@@ -63,6 +80,7 @@ const { title, description, image = "/nano.png" } = Astro.props;
 <meta property="og:image" content={new URL(image, Astro.url)} />
 <meta property="og:site_name" content={SITE.NAME} />
 <meta property="og:locale" content="en_US" />
+<meta property="article:author" content="Pratik Temkar" />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
@@ -70,11 +88,21 @@ const { title, description, image = "/nano.png" } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta property="twitter:creator" content="@pratikstemkar" />
+<meta property="twitter:site" content="@pratikstemkar" />
 
 <ClientRouter  />
 
 <!-- RSS Link -->
 <link rel="alternate" type="application/rss+xml" title={SITE.NAME} href={new URL("rss.xml", Astro.site)} />
+
+<!-- LLM/AI Content Discovery -->
+<link rel="alternate" type="text/plain" title="LLM Site Information" href="/llms.txt" />
+<link rel="alternate" type="text/plain" title="Full Content for LLMs" href="/llms-full.txt" />
+<link rel="author" href="https://pratikstemkar.in" />
+<link rel="me" href="https://github.com/pratikstemkar" />
+<link rel="me" href="https://twitter.com/pratikstemkar" />
+<link rel="me" href="https://linkedin.com/in/pratikstemkar" />
 
 <!-- Google Analytics -->
 <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-XDPKQN6WD6"></script>
@@ -139,9 +167,6 @@ const { title, description, image = "/nano.png" } = Astro.props;
     // Setup copy buttons for code blocks
     setupCopyButtons();
     
-    // Setup cursor glow effect
-    setupCursorGlow();
-    
     // Setup command palette button
     const openPaletteBtn = document.getElementById('open-command-palette');
     openPaletteBtn?.addEventListener('click', () => {
@@ -163,25 +188,6 @@ const { title, description, image = "/nano.png" } = Astro.props;
         link.setAttribute('target', '_blank');
         link.setAttribute('rel', 'noopener noreferrer');
       }
-    });
-  }
-
-  function setupCursorGlow() {
-    const cursorGlow = document.querySelector('.cursor-glow');
-    if (!cursorGlow) return;
-    
-    document.addEventListener('mousemove', (e) => {
-      document.documentElement.style.setProperty('--cursor-glow-x', e.clientX + 'px');
-      document.documentElement.style.setProperty('--cursor-glow-y', e.clientY + 'px');
-    });
-    
-    // Hide glow when mouse leaves window
-    document.addEventListener('mouseleave', () => {
-      cursorGlow.style.opacity = '0';
-    });
-    
-    document.addEventListener('mouseenter', () => {
-      cursorGlow.style.opacity = '1';
     });
   }
 
