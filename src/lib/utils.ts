@@ -38,3 +38,22 @@ export function dateRange(startDate: Date, endDate?: Date | string): string {
 
   return `${startMonth}${startYear} - ${endMonth}${endYear}`;
 }
+
+/**
+ * Extracts the cover image URL from markdown content.
+ * Looks for an image with alt text "Cover Image" in the format: ![Cover Image](/path/to/image.png)
+ * @param markdown - The raw markdown content
+ * @returns The image URL if found, undefined otherwise
+ */
+export function getCoverImage(markdown: string): string | undefined {
+  // Match markdown image syntax with "Cover Image" as alt text
+  // Supports both exact match and case-insensitive match
+  const coverImageRegex = /!\[Cover Image\]\(([^)]+)\)/i;
+  const match = markdown.match(coverImageRegex);
+
+  if (match && match[1]) {
+    return match[1];
+  }
+
+  return undefined;
+}

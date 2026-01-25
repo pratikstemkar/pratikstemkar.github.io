@@ -1,7 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 
-const blogs = await getCollection("blog", ({ data }) => !data.draft && data.visible !== false);
+const blogs = (await getCollection("blog", ({ data }) => !data.draft && data.visible !== false))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const projects = await getCollection("projects", ({ data }) => !data.draft);
 
 const items = [
