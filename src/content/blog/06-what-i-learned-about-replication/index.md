@@ -1,6 +1,6 @@
 ---
 title: "What I learned about replication from Designing Data Intensive Applications"
-description: "What I learned about replication from Designing Data Intensive Applications"
+description: "Everything about replication in Distributed Systems"
 date: "Jan 25 2026"
 tags: ["distributed-systems", "replication", "database", "designing-data-intensive-applications"]
 visible: true

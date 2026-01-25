@@ -9,7 +9,7 @@ This is the personal portfolio and blog of Pratik Temkar, a software developer a
 - **Name**: Pratik Temkar
 - **Role**: Software Developer & Tech Enthusiast
 - **Email**: pratikstemkar@gmail.com
-- **Website**: https://pratikstemkar.in
+- **Website**: https://pratikstemkar.github.io
 - **GitHub**: https://github.com/pratikstemkar
 - **LinkedIn**: https://linkedin.com/in/pratikstemkar
 - **Twitter/X**: https://twitter.com/pratikstemkar

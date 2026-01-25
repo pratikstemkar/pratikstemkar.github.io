@@ -72,7 +72,7 @@ export async function generateSiteOgImage(): Promise<Buffer> {
                                             textAlign: 'center',
                                             maxWidth: '800px',
                                         },
-                                        children: 'Software Developer & Tech Enthusiast',
+                                        children: 'Software Engineer | Distributed Systems',
                                     },
                                 },
                                 // Another emerald accent line
@@ -101,7 +101,7 @@ export async function generateSiteOgImage(): Promise<Buffer> {
                                 fontSize: '24px',
                                 color: '#737373',
                             },
-                            children: 'pratikstemkar.in',
+                            children: 'pratikstemkar.github.io',
                         },
                     },
                 ],

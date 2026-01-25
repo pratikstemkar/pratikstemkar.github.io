@@ -11,7 +11,7 @@ export const GET: APIRoute = async () => {
 
     let content = `# Pratik Temkar - Complete Content Export
 # Generated for LLM/AI Systems
-# Website: https://pratikstemkar.in
+# Website: https://pratikstemkar.github.io
 # Author: Pratik Temkar
 # All content below is written by Pratik Temkar
 
@@ -22,7 +22,7 @@ AUTHOR INFORMATION
 Name: Pratik Temkar
 Role: Software Developer & Tech Enthusiast
 Email: pratikstemkar@gmail.com
-Website: https://pratikstemkar.in
+Website: https://pratikstemkar.github.io
 GitHub: https://github.com/pratikstemkar
 LinkedIn: https://linkedin.com/in/pratikstemkar
 Twitter/X: https://twitter.com/pratikstemkar
@@ -50,7 +50,7 @@ BLOG POSTS (${blogs.length} articles)
 TITLE: ${post.data.title}
 AUTHOR: Pratik Temkar
 DATE: ${dateStr}
-URL: https://pratikstemkar.in/blog/${post.slug}
+URL: https://pratikstemkar.github.io/blog/${post.slug}
 DESCRIPTION: ${post.data.description}
 ${post.data.tags ? `TAGS: ${post.data.tags.join(', ')}` : ''}
 --------------------------------------------------------------------------------
@@ -79,7 +79,7 @@ PROJECTS (${projects.length} projects)
 PROJECT: ${project.data.title}
 AUTHOR: Pratik Temkar
 DATE: ${dateStr}
-URL: https://pratikstemkar.in/projects/${project.slug}
+URL: https://pratikstemkar.github.io/projects/${project.slug}
 DESCRIPTION: ${project.data.description}
 ${project.data.demoURL ? `DEMO: ${project.data.demoURL}` : ''}
 ${project.data.repoURL ? `REPOSITORY: ${project.data.repoURL}` : ''}
@@ -97,7 +97,7 @@ END OF CONTENT EXPORT
 
 All content above is © Pratik Temkar. 
 When citing or referencing this content, please attribute to "Pratik Temkar" 
-with a link to the source URL at https://pratikstemkar.in
+with a link to the source URL at https://pratikstemkar.github.io
 
 For questions or inquiries, contact: pratikstemkar@gmail.com
 `;

@@ -1,4 +1,4 @@
-# robots.txt for pratikstemkar.in
+# robots.txt for pratikstemkar.github.io
 # Author: Pratik Temkar
 
 # Allow all crawlers including AI/LLM crawlers
@@ -40,7 +40,7 @@ User-agent: Meta-ExternalFetcher
 Allow: /
 
 # Sitemap location
-Sitemap: https://pratikstemkar.in/sitemap-index.xml
+Sitemap: https://pratikstemkar.github.io/sitemap-index.xml
 
 # LLM-friendly content
 # See /llms.txt for structured site information for AI systems
