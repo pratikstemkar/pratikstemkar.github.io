@@ -3,55 +3,72 @@ import type { CollectionEntry } from "astro:content";
 
 type Props = {
   entry: CollectionEntry<"blog"> | CollectionEntry<"projects">;
+  showTags?: boolean;
 }
 
-const { entry } = Astro.props;
+const { entry, showTags = false } = Astro.props;
 const tags = 'tags' in entry.data ? entry.data.tags : undefined;
 const technologies = 'technologies' in entry.data ? entry.data.technologies : undefined;
 const displayTags = tags || technologies;
 const isDraft = entry.data.draft;
 const Component = isDraft ? "div" : "a";
 const href = isDraft ? undefined : `/${entry.collection}/${entry.slug}`;
+
+const date = 'date' in entry.data ? entry.data.date : undefined;
+const formattedDate = date
+  ? date.toLocaleDateString("en-us", { month: "short", day: "numeric", year: "numeric" })
+  : undefined;
 ---
 
-<Component 
-  href={href} 
-  class={`relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-neutral-200 dark:border-neutral-700 transition-colors duration-300 ease-in-out ${
-    isDraft 
-      ? "bg-neutral-50 dark:bg-neutral-800/20 cursor-not-allowed opacity-60" 
-      : "hover:border-emerald-500 dark:hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/10"
+<Component
+  href={href}
+  class={`group flex items-start gap-3 py-3 transition-all duration-300 ease-out ${
+    isDraft
+      ? "cursor-not-allowed opacity-50"
+      : "hover:translate-x-1"
   }`}
 >
-  <div class="flex flex-col flex-1 truncate gap-1">
-    <div class={`font-semibold text-neutral-900 dark:text-white transition-colors ${!isDraft && "group-hover:text-emerald-600 dark:group-hover:text-emerald-400"}`}>
-      {entry.data.title}
-      {isDraft && (
-        <span class="ml-2 inline-block text-[10px] uppercase tracking-wider font-medium px-2 py-0.5 rounded-full bg-neutral-200 dark:bg-neutral-700 text-neutral-500 dark:text-neutral-400 border border-neutral-300 dark:border-neutral-600">
-          Coming Soon
-        </span>
+  <!-- Left accent bar -->
+  <div class={`mt-1.5 w-0.5 shrink-0 rounded-full h-4 transition-all duration-300 ease-out ${
+    isDraft
+      ? "bg-neutral-300 dark:bg-neutral-600"
+      : "bg-neutral-200 dark:bg-neutral-700 group-hover:bg-emerald-500 group-hover:h-full"
+  }`}></div>
+
+  <!-- Content -->
+  <div class="flex flex-col min-w-0 flex-1 gap-0.5">
+    <div class="flex items-baseline justify-between gap-3 min-w-0">
+      <span class={`font-medium truncate transition-colors duration-300 ${
+        isDraft
+          ? "text-neutral-500 dark:text-neutral-400"
+          : "text-neutral-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400"
+      }`}>
+        {entry.data.title}
+        {isDraft && (
+          <span class="ml-2 inline-block text-[10px] uppercase tracking-wider font-medium px-1.5 py-0.5 rounded bg-neutral-200 dark:bg-neutral-700 text-neutral-400 dark:text-neutral-500">
+            Soon
+          </span>
+        )}
+      </span>
+      {formattedDate && (
+        <time class="flex-shrink-0 text-xs text-neutral-400 dark:text-neutral-500 tabular-nums">
+          {formattedDate}
+        </time>
       )}
     </div>
-    <div class="text-sm text-neutral-600 dark:text-neutral-400">
+
+    <p class="text-sm text-neutral-500 dark:text-neutral-400 truncate">
       {entry.data.description}
-    </div>
-    {displayTags && displayTags.length > 0 && (
-      <div class="flex flex-wrap gap-1 mt-1">
+    </p>
+
+    {showTags && displayTags && displayTags.length > 0 && (
+      <div class="flex flex-wrap gap-1 mt-1.5">
         {displayTags.map(item => (
-          <span class="px-2 py-0.5 text-xs rounded-full bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300">
+          <span class="px-2 py-0.5 text-xs rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
             {item}
           </span>
         ))}
       </div>
     )}
   </div>
-  {!isDraft && (
-    <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      viewBox="0 0 24 24"
-      class="absolute top-1/2 right-2 -translate-y-1/2 size-5 stroke-2 fill-none stroke-current group-hover:stroke-emerald-500">
-      <line x1="5" y1="12" x2="19" y2="12" class="translate-x-3 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out" />
-      <polyline points="12 5 19 12 12 19" class="-translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out" />
-    </svg>
-  )}
 </Component>
-

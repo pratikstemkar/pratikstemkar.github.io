@@ -11,7 +11,7 @@ import ReadingProgress from "@components/ReadingProgress.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import SeriesNav from "@components/SeriesNav.astro";
 import PostNavigation from "@components/PostNavigation.astro";
-import { SITE } from "@consts";
+import { SITE, SOCIALS } from "@consts";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog"))
@@ -75,22 +75,24 @@ const jsonLd = {
             <FormattedDate date={post.data.date} />
           </div>
           <span class="text-neutral-400 dark:text-neutral-500">&bull;</span>
+          <a
+            href={SOCIALS.find(s => s.NAME === "twitter-x")?.HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-medium text-sm hover:underline transition-colors"
+          >
+            {SITE.NAME}
+          </a>
+          <span class="text-neutral-400 dark:text-neutral-500">&bull;</span>
           <div class="font-medium text-sm">
             {readingTime(post.body)}
           </div>
         </div>
-        <h1 class="animate text-3xl font-bold text-neutral-900 dark:text-white">
+        <h1 id="post-title" class="animate text-3xl font-bold text-neutral-900 dark:text-white">
           {post.data.title}
         </h1>
-        {post.data.tags && post.data.tags.length > 0 && (
-          <div class="animate flex flex-wrap gap-2 mt-4">
-            {post.data.tags.map(tag => (
-              <span class="px-3 py-1 text-xs font-medium rounded-full bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
+
+
       </div>
     </div>
 
@@ -118,7 +120,7 @@ const jsonLd = {
       <!-- Table of Contents (desktop sidebar) - Absolutely positioned to the right -->
       <aside class="hidden xl:block absolute top-0 -right-[244px] h-full w-[220px]">
         <div class="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-4 scrollbar-hide">
-          <TableOfContents headings={headings} />
+          <TableOfContents headings={headings} title={post.data.title} />
           <div class="mt-8 pb-8">
              <ShareButtons 
                 title={post.data.title}

@@ -1,13 +1,14 @@
 ---
 interface Props {
   headings: { depth: number; slug: string; text: string }[];
+  title?: string;
 }
 
-const { headings } = Astro.props;
+const { headings, title } = Astro.props;
 const toc = headings.filter(h => h.depth <= 3);
 ---
 
-{toc.length > 0 && (
+{(toc.length > 0 || title) && (
   <nav class="toc-container">
     <h4 class="text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-3 flex items-center gap-2">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -21,6 +22,17 @@ const toc = headings.filter(h => h.depth <= 3);
       On this page
     </h4>
     <ul class="space-y-2 text-sm border-l border-neutral-200 dark:border-neutral-700">
+      {title && (
+        <li>
+          <a
+            href="#post-title"
+            class="toc-link block py-1 pl-4 transition-colors duration-200 text-neutral-600 dark:text-neutral-400 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium"
+            data-heading="post-title"
+          >
+            {title}
+          </a>
+        </li>
+      )}
       {toc.map(heading => (
         <li>
           <a 
@@ -43,21 +55,37 @@ const toc = headings.filter(h => h.depth <= 3);
 <script>
   function initToc() {
     const tocLinks = document.querySelectorAll('.toc-link');
-    const headings = document.querySelectorAll('article h2, article h3');
+    const headings = document.querySelectorAll('h1#post-title, article h2, article h3');
     
     if (tocLinks.length === 0 || headings.length === 0) return;
-    
+
+    function setActive(id: string | null) {
+      tocLinks.forEach(link => {
+        link.classList.remove('text-emerald-600', 'dark:text-emerald-400', 'border-l-2', 'border-emerald-500', '-ml-px');
+        if (id && link.getAttribute('data-heading') === id) {
+          link.classList.add('text-emerald-600', 'dark:text-emerald-400', 'border-l-2', 'border-emerald-500', '-ml-px');
+        }
+      });
+    }
+
+    // Title link → scroll to very top, no hash in URL
+    const titleLink = document.querySelector('[data-heading="post-title"]');
+    if (titleLink) {
+      titleLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        history.replaceState(null, '', window.location.pathname);
+      });
+      // Highlight title on load if already at top
+      if (window.scrollY < 100) setActive('post-title');
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const id = entry.target.getAttribute('id');
-            tocLinks.forEach(link => {
-              link.classList.remove('text-emerald-600', 'dark:text-emerald-400', 'border-l-2', 'border-emerald-500', '-ml-px');
-              if (link.getAttribute('data-heading') === id) {
-                link.classList.add('text-emerald-600', 'dark:text-emerald-400', 'border-l-2', 'border-emerald-500', '-ml-px');
-              }
-            });
+            setActive(id);
           }
         });
       },

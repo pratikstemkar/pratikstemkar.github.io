@@ -3,6 +3,7 @@ title: "Plan for 2026"
 description: "Let's see what we want to achieve in 2026."
 date: "Jan 4 2026"
 tags: ["personal", "plan", "2026"]
+visible: false
 ---
 
 I’m planning to work on a few personal projects in the (hopefully) great year of 2026. This is a rough plan for now. I don’t know exactly what shape it’ll take, but it feels good to start somewhere.

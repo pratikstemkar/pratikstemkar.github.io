@@ -19,11 +19,11 @@ const projects = (await getCollection("projects"))
         </div>
         <div class="w-12 h-1 bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full mt-2"></div>
       </div>
-      <ul class="animate flex flex-col gap-4">
+      <ul class="animate flex flex-col divide-y divide-neutral-100 dark:divide-neutral-800/60">
         {
           projects.map((project) => (
             <li>
-              <ArrowCard entry={project}/>
+              <ArrowCard entry={project} showTags={true}/>
             </li>
           ))
         }

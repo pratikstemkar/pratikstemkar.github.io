@@ -41,10 +41,14 @@ const jsonLd = {
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <Container>
-    <h4 class="animate font-semibold text-neutral-900 dark:text-white">
-      Hi, I'm Pratik <span class="text-xl">👋🏻</span> 
-    </h4>
-    <div class="w-12 h-1 bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full mt-2 mb-4"></div>
+    <div class="animate mb-8">
+      <p class="text-neutral-500 dark:text-neutral-400 text-lg mb-1">Hi there, I'm</p>
+      <h1 class="hero-name font-extrabold tracking-tight text-neutral-900 dark:text-white mb-2 whitespace-nowrap">
+        Pratik Temkar <span class="inline-block animate-wave">👋🏻</span>
+      </h1>
+      <p class="text-xl font-medium text-emerald-600 dark:text-emerald-400">Software Engineer · Distributed Systems</p>
+      <div class="w-16 h-1 bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full mt-4"></div>
+    </div>
     <div class="space-y-16">
       <section>
         <article class="space-y-4">
@@ -80,7 +84,7 @@ const jsonLd = {
             <span class="text-emerald-600 dark:text-emerald-400 hover:underline">See all posts</span>
           </Link>
         </div>
-        <ul class="flex flex-col gap-4">
+        <ul class="flex flex-col divide-y divide-neutral-100 dark:divide-neutral-800/60">
           {blog.map(post => (
             <li>
               <ArrowCard entry={post} />
@@ -129,7 +133,7 @@ const jsonLd = {
             <span class="text-emerald-600 dark:text-emerald-400 hover:underline">See all projects</span>
           </Link>
         </div>
-        <ul class="flex flex-col gap-4">
+        <ul class="flex flex-col divide-y divide-neutral-100 dark:divide-neutral-800/60">
           {projects.map(project => (
             <li>
               <ArrowCard entry={project} />
