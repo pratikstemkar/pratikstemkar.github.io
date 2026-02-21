@@ -5,4 +5,4 @@ dateStart: "06/02/2025"
 dateEnd: "Current"
 ---
 
-Built and enhanced full-stack features for a large-scale SaaS field-service platform using ASP.NET Core, Vue.js, and SQL Server. Implemented centralized logging and monitoring with Coralogix to improve observability and significantly reduce mean time to resolution (MTTR). Supported cloud deployments and infrastructure on Microsoft Azure, contributing to improved deployment stability and fewer infrastructure-related incidents.
+Led development of scalable full-stack features for a large-scale SaaS platform using C#, ASP.NET Core, TypeScript, Vue.js, SQL Server, and Azure, improving reliability, observability, and deployment stability.
