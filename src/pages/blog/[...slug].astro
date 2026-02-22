@@ -91,7 +91,9 @@ const jsonLd = {
         <h1 id="post-title" class="animate text-3xl font-bold text-neutral-900 dark:text-white">
           {post.data.title}
         </h1>
-
+        <p class="animate mt-3 text-base text-neutral-500 dark:text-neutral-400 leading-relaxed">
+          {post.data.description}
+        </p>
 
       </div>
     </div>
@@ -131,6 +133,30 @@ const jsonLd = {
       </aside>
     </div>
     
+    <!-- References Section -->
+    {post.data.references && post.data.references.length > 0 && (
+      <div class="max-w-[640px] mx-auto mt-12 animate">
+        <hr class="border-neutral-200 dark:border-neutral-800 mb-8" />
+        <h2 class="text-sm font-semibold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-4">
+          References
+        </h2>
+        <ol class="space-y-2 list-decimal list-inside">
+          {post.data.references.map((ref) => (
+            <li class="text-sm text-neutral-600 dark:text-neutral-400">
+              <a
+                href={ref.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-neutral-900 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-400 underline underline-offset-2 transition-colors"
+              >
+                {ref.label}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </div>
+    )}
+
     <!-- Previous/Next Post Navigation -->
     <div class="max-w-[640px] mx-auto mt-12">
       <PostNavigation currentSlug={post.slug} />

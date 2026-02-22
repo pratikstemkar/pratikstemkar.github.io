@@ -4,6 +4,13 @@ description: "Everything about Partitioning and Sharding in Distributed Database
 date: "Feb 21 2026"
 tags: ["distributed-systems", "database", "partitioning", "sharding"]
 visible: true
+references:
+  - label: "Database Sharding - PlanetScale"
+    url: "https://planetscale.com/blog/database-sharding"
+  - label: "Designing Data-Intensive Applications – Martin Kleppmann"
+    url: "https://dataintensive.net"
+  - label: "Partitioning Data - Range, Hash, and When to Use Them - Arpit Bhayani"
+    url: "https://arpitbhayani.me/blogs/some-data-partitioning-strategies-for-distributed-data-stores"
 ---
 
 When you launch a new application, you usually start with a single database server. It is simple, predictable, and honestly the right choice most of the time. You focus on building features, shipping fast, and validating your idea.

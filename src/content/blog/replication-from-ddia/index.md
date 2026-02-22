@@ -4,6 +4,9 @@ description: "Everything about replication in Distributed Systems"
 date: "Jan 25 2026"
 tags: ["distributed-systems", "replication", "database", "designing-data-intensive-applications"]
 visible: true
+references:
+  - label: "Designing Data-Intensive Applications – Martin Kleppmann"
+    url: "https://dataintensive.net"
 ---
 
 While reading Chapter 5 on replication from *Designing Data-Intensive Applications* by Martin Kleppmann, I realized that replication is less about copying data and more about making careful trade-offs. It pushes you to think deeply about availability, latency, failure modes, and how much inconsistency your system and its users can realistically tolerate.

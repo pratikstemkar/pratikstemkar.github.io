@@ -13,7 +13,8 @@ export function formatDate(date: Date) {
   }).format(date);
 }
 
-export function readingTime(html: string) {
+export function readingTime(html: string | undefined) {
+  if (!html) return "1 min read";
   const textOnly = html.replace(/<[^>]+>/g, "");
   const wordCount = textOnly.split(/\s+/).length;
   const readingTimeMinutes = ((wordCount / 200) + 1).toFixed();
@@ -45,7 +46,8 @@ export function dateRange(startDate: Date, endDate?: Date | string): string {
  * @param markdown - The raw markdown content
  * @returns The image URL if found, undefined otherwise
  */
-export function getCoverImage(markdown: string): string | undefined {
+export function getCoverImage(markdown: string | undefined): string | undefined {
+  if (!markdown) return undefined;
   // Match markdown image syntax with "Cover Image" as alt text
   // Supports both exact match and case-insensitive match
   const coverImageRegex = /!\[Cover Image\]\(([^)]+)\)/i;
