@@ -1,7 +1,7 @@
 ---
 title: "Scaling your Database - Partitioning and Sharding"
 description: "Everything about Partitioning and Sharding in Distributed Databases"
-date: "Feb 21 2026"
+date: "Feb 8 2026"
 tags: ["distributed-systems", "database", "partitioning", "sharding"]
 visible: true
 references:

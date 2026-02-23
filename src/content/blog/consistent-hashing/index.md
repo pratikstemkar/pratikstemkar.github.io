@@ -1,7 +1,7 @@
 ---
 title: "Consistent Hashing"
 description: "Designing Stable Partitioning for Distributed Systems"
-date: "Feb 22 2026"
+date: "Feb 15 2026"
 tags: ["distributed-systems", "database", "consistent-hashing"]
 visible: true
 references:
