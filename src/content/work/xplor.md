@@ -5,4 +5,4 @@ dateStart: "06/02/2025"
 dateEnd: "Current"
 ---
 
-Led development of scalable full-stack features for a large-scale SaaS platform using C#, ASP.NET Core, TypeScript, Vue.js, SQL Server, and Azure, improving reliability, observability, and deployment stability.
+Designed and delivered full-stack features on a large-scale SaaS platform, owning solutions from technical design through to production. Worked across C#, ASP.NET Core, TypeScript, and Vue.js, with SQL Server and Azure as the core infrastructure layer.

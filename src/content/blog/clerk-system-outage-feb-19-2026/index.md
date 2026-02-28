@@ -1,5 +1,5 @@
 ---
-title: "What I Learned From the Clerk System Outage on February 19, 2026"
+title: "What I Learned From the Clerk System Outage"
 description: "How a PostgreSQL Query Plan Flip Took Down a Production System"
 date: "Feb 22 2026"
 tags: ["database", "postgres", "outage", "postmortem"]
