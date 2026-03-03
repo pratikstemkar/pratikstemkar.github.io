@@ -8,7 +8,7 @@ references:
   - label: "Database Sharding - PlanetScale"
     url: "https://planetscale.com/blog/database-sharding"
   - label: "Designing Data-Intensive Applications – Martin Kleppmann"
-    url: "https://dataintensive.net"
+    url: "https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/"
   - label: "Partitioning Data - Range, Hash, and When to Use Them - Arpit Bhayani"
     url: "https://arpitbhayani.me/blogs/some-data-partitioning-strategies-for-distributed-data-stores"
 ---

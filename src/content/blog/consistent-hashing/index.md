@@ -10,7 +10,7 @@ references:
   - label: "Amazon Dynamo: Amazon's Highly Available Key-value Store"
     url: "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
   - label: "Designing Data-Intensive Applications – Martin Kleppmann"
-    url: "https://dataintensive.net"
+    url: "https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/"
   - label: "Consistent Hashing - What It Is and How to Implement It - Arpit Bhayani"
     url: "https://arpitbhayani.me/blogs/consistent-hashing/"
   - label: "Consistent Hashing - Hello Interview"
