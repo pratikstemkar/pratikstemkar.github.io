@@ -16,7 +16,7 @@ export default {
       typography: {
         DEFAULT: {
           css: {
-            maxWidth: '70ch',
+            maxWidth: '80ch',
             lineHeight: '1.8',
             fontSize: '1.125rem',
             'p, li': {

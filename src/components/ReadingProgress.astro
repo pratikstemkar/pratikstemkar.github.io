@@ -17,18 +17,25 @@
 function initReadingProgress() {
   const progressBar = document.getElementById('reading-progress-bar');
   if (!progressBar) return;
-  
+
+  // Remove any previous scroll listener to avoid stacking on navigation
+  if (window._readingProgressHandler) {
+    window.removeEventListener('scroll', window._readingProgressHandler);
+  }
+
   function updateProgress() {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
     progressBar.style.width = Math.min(100, Math.max(0, progress)) + '%';
   }
-  
+
+  window._readingProgressHandler = updateProgress;
   window.addEventListener('scroll', updateProgress, { passive: true });
-  updateProgress(); // Initial call
+  updateProgress();
 }
 
-document.addEventListener('DOMContentLoaded', initReadingProgress);
-document.addEventListener('astro:after-swap', initReadingProgress);
+// astro:page-load fires on BOTH the very first load AND after every
+// View Transitions swap — the single correct hook for Astro w/ ClientRouter.
+document.addEventListener('astro:page-load', initReadingProgress);
 </script>

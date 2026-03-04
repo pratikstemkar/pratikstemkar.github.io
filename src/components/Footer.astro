@@ -6,15 +6,11 @@ import BackToTop from "@components/BackToTop.astro";
 
 <footer class="animate">
   <Container>
-    <div class="relative">
-      <div class="absolute right-0 -top-20">
-        <BackToTop />
-      </div>
-    </div>
     <div class="flex justify-between items-center">
       <div>
         &copy; {new Date().getFullYear()} {`|`} {SITE.NAME}
       </div>
+      <BackToTop />
       <div class="flex flex-wrap gap-1 items-center">
         <button
           id="light-theme-button"

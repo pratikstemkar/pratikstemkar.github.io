@@ -62,109 +62,113 @@ const jsonLd = {
   <!-- JSON-LD Structured Data -->
   <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   
-  <div class="mx-auto max-w-screen-lg px-5">
-    <div class="max-w-[640px] mx-auto">
-      <div class="animate">
-        <BackToPrev href="/blog">
-          Back to blog
-        </BackToPrev>
-      </div>
-      <div class="space-y-1 my-10">
-        <div class="animate flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
-          <div class="font-medium text-sm">
-            <FormattedDate date={post.data.date} />
-          </div>
-          <span class="text-neutral-400 dark:text-neutral-500">&bull;</span>
-          <a
-            href={SOCIALS.find(s => s.NAME === "twitter-x")?.HREF}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-medium text-sm hover:underline transition-colors"
-          >
-            {SITE.NAME}
-          </a>
-          <span class="text-neutral-400 dark:text-neutral-500">&bull;</span>
-          <div class="font-medium text-sm">
-            {readingTime(post.body)}
-          </div>
+  <div class="mx-auto max-w-[1038px] px-5">
+    <!-- Single flex row: [post content] [ToC sidebar] -->
+    <div class="flex gap-12 items-start">
+
+      <!-- LEFT COLUMN: all post content -->
+      <div class="flex-1 min-w-0 max-w-[780px]">
+
+        <!-- Back link -->
+        <div class="animate">
+          <BackToPrev href="/blog">
+            Back to blog
+          </BackToPrev>
         </div>
-        <h1 id="post-title" class="animate text-3xl font-bold text-neutral-900 dark:text-white">
-          {post.data.title}
-        </h1>
-        <p class="animate mt-3 text-base text-neutral-500 dark:text-neutral-400 leading-relaxed">
-          {post.data.description}
-        </p>
 
-      </div>
-    </div>
+        <!-- Title & meta -->
+        <div class="space-y-1 my-10">
+          <div class="animate flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+            <div class="font-medium text-sm">
+              <FormattedDate date={post.data.date} />
+            </div>
+            <span class="text-neutral-400 dark:text-neutral-500">&bull;</span>
+            <a
+              href={SOCIALS.find(s => s.NAME === "twitter-x")?.HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-medium text-sm hover:underline transition-colors"
+            >
+              {SITE.NAME}
+            </a>
+            <span class="text-neutral-400 dark:text-neutral-500">&bull;</span>
+            <div class="font-medium text-sm">
+              {readingTime(post.body)}
+            </div>
+          </div>
+          <h1 id="post-title" class="animate text-3xl font-bold text-neutral-900 dark:text-white">
+            {post.data.title}
+          </h1>
+          <p class="animate mt-3 text-base text-neutral-500 dark:text-neutral-400 leading-relaxed">
+            {post.data.description}
+          </p>
+        </div>
 
-    <!-- Series Navigation -->
-    {post.data.series && (
-      <div class="animate max-w-[640px] mx-auto">
-        <SeriesNav 
-          series={post.data.series} 
-          currentSlug={post.slug}
-          currentOrder={post.data.seriesOrder ?? 0}
-        />
-      </div>
-    )}
-    
-    <!-- Main content with Table of Contents -->
-    <!-- Main content with Table of Contents -->
-    <div class="relative mt-12">
-      <!-- Article Content - Centered -->
-      <div class="max-w-[640px] mx-auto">
+        <!-- Series Navigation -->
+        {post.data.series && (
+          <div class="animate mb-10">
+            <SeriesNav
+              series={post.data.series}
+              currentSlug={post.slug}
+              currentOrder={post.data.seriesOrder ?? 0}
+            />
+          </div>
+        )}
+
+        <!-- Article -->
         <article class="animate">
           <Content />
         </article>
+
+        <!-- References Section -->
+        {post.data.references && post.data.references.length > 0 && (
+          <div class="mt-12 animate">
+            <hr class="border-neutral-200 dark:border-neutral-800 mb-8" />
+            <h2 class="text-sm font-semibold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-4">
+              References
+            </h2>
+            <ol class="space-y-2 list-decimal list-inside">
+              {post.data.references.map((ref) => (
+                <li class="text-sm text-neutral-600 dark:text-neutral-400">
+                  <a
+                    href={ref.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-neutral-900 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-400 underline underline-offset-2 transition-colors"
+                  >
+                    {ref.label}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+
+        <!-- Previous/Next Post Navigation -->
+        <div class="mt-12">
+          <PostNavigation currentSlug={post.slug} />
+
+          <!-- Connect CTA -->
+          <div class="animate mt-12">
+            <ConnectCTA />
+          </div>
+        </div>
+
       </div>
-      
-      <!-- Table of Contents (desktop sidebar) - Absolutely positioned to the right -->
-      <aside class="hidden xl:block absolute top-0 -right-[244px] h-full w-[220px]">
-        <div class="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-4 scrollbar-hide">
+
+      <!-- RIGHT COLUMN: Table of Contents (desktop only) -->
+      <aside class="hidden xl:block w-[210px] flex-shrink-0 self-start sticky top-24 pt-[calc(theme(spacing.10)+theme(spacing.10))]">
+        <div class="max-h-[calc(100vh-8rem)] scrollbar-hide">
           <TableOfContents headings={headings} title={post.data.title} />
           <div class="mt-8 pb-8">
-             <ShareButtons 
-                title={post.data.title}
-                url={currentUrl}
-              />
+            <ShareButtons
+              title={post.data.title}
+              url={currentUrl}
+            />
           </div>
         </div>
       </aside>
-    </div>
-    
-    <!-- References Section -->
-    {post.data.references && post.data.references.length > 0 && (
-      <div class="max-w-[640px] mx-auto mt-12 animate">
-        <hr class="border-neutral-200 dark:border-neutral-800 mb-8" />
-        <h2 class="text-sm font-semibold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-4">
-          References
-        </h2>
-        <ol class="space-y-2 list-decimal list-inside">
-          {post.data.references.map((ref) => (
-            <li class="text-sm text-neutral-600 dark:text-neutral-400">
-              <a
-                href={ref.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-neutral-900 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-400 underline underline-offset-2 transition-colors"
-              >
-                {ref.label}
-              </a>
-            </li>
-          ))}
-        </ol>
-      </div>
-    )}
 
-    <!-- Previous/Next Post Navigation -->
-    <div class="max-w-[640px] mx-auto mt-12">
-      <PostNavigation currentSlug={post.slug} />
-
-      <!-- Connect CTA -->
-      <div class="animate mt-12">
-        <ConnectCTA />
-      </div>
     </div>
   </div>
 </PageLayout>
