@@ -227,6 +227,12 @@ html.scrolled #back-to-top {
   @apply opacity-100 pointer-events-auto;
 }
 
+@media (max-width: 639px) {
+  #back-to-top {
+    @apply hidden;
+  }
+}
+
 @keyframes wave {
 
   0%,
