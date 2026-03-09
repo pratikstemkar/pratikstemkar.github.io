@@ -236,7 +236,7 @@ For example, if an application frequently queries unprocessed jobs, an index on 
 
 ---
 
-## Final Thoughts
+## Why This Matters
 
 B-Tree indexing in PostgreSQL is a good example of how theoretical data structures evolve in real systems.
 
