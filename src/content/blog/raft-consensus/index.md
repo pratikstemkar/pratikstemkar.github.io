@@ -4,6 +4,13 @@ description: "A simple way to make multiple servers agree and stay consistent"
 date: "March 28, 2026"
 tags: ["database", "raft", "consensus", "distributed-systems"]
 visible: true
+references:
+  - label: "Designing for Understandability: The Raft Consensus Algorithm"
+    url: "https://www.youtube.com/watch?v=vYp4LYbnnW8"
+  - label: "The Raft Consensus Algorithm"
+    url: "https://raft.github.io/"
+  - label: "In Search of an Understandable Consensus Algorithm"
+    url: "https://raft.github.io/raft.pdf"
 ---
 
 Distributed systems fail in ways that single-machine systems never do. Nodes crash, networks partition, messages arrive late or never. If you still want your system to behave correctly, you need one core guarantee: agreement across machines.
