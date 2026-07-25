@@ -5,7 +5,7 @@ import PageLayout from "@layouts/PageLayout.astro";
 import ArrowCard from "@components/ArrowCard.astro";
 import Link from "@components/Link.astro";
 import { dateRange } from "@lib/utils";
-import { SITE, HOME, SOCIALS } from "@consts";
+import { SITE, HOME, OPEN_TO_WORK, SOCIALS } from "@consts";
 
 const blog = (await getCollection("blog"))
   .filter(post => post.data.visible !== false)
@@ -34,7 +34,7 @@ const jsonLd = {
   "name": SITE.NAME,
   "url": Astro.site,
   "sameAs": SOCIALS.map(social => social.HREF),
-  "jobTitle": "Software Developer"
+  "jobTitle": "Software Engineer · Distributed Systems · Databases · Agentic AI"
 };
 ---
 
@@ -46,14 +46,27 @@ const jsonLd = {
       <h1 class="hero-name font-extrabold tracking-tight text-neutral-900 dark:text-white mb-2 whitespace-nowrap">
         Pratik Temkar <span class="inline-block animate-wave">👋🏻</span>
       </h1>
-      <p class="text-xl font-medium text-emerald-600 dark:text-emerald-400">Software Engineer · Distributed Systems</p>
+      <div class="flex flex-wrap items-center gap-2">
+        <p class="text-xl font-medium text-emerald-600 dark:text-emerald-400">Software Engineer · Distributed Systems · Databases · Agentic AI</p>
+        {
+          OPEN_TO_WORK && (
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-900/30 border border-purple-200 dark:border-purple-700 text-purple-700 dark:text-purple-300 text-xs font-medium">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+              </span>
+              Open to Work
+            </span>
+          )
+        }
+      </div>
       <div class="w-16 h-1 bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full mt-4"></div>
     </div>
     <div class="space-y-16">
       <section>
         <article class="space-y-4">
           <p class="animate">
-            I am a Software Engineer focused on building distributed systems and scalable backend architectures. I enjoy designing systems that handle real-world scale, reliability challenges, and performance constraints. My work revolves around backend engineering, distributed data systems, and cloud-native infrastructure.
+            I am a Software Engineer focused on building distributed systems, scalable backend architectures, and working with databases at scale. I enjoy designing systems that handle real-world reliability challenges and performance constraints. I also explore agentic AI workflows, integrating LLMs and AI agents into practical engineering solutions. My work revolves around backend engineering, distributed data systems, databases, and AI-powered development.
           </p>
           <!-- <p class="animate">
             I come packed with full type safety, a sitemap, an rss feed, markdown 

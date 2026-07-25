@@ -267,3 +267,106 @@ html.scrolled #back-to-top {
 .hero-name {
   font-size: clamp(1.75rem, 7.5vw, 3rem);
 }
+
+@media print {
+  html {
+    font-size: 12px;
+  }
+
+  header,
+  footer,
+  #command-palette,
+  #back-to-top {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  main {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .print\:block {
+    display: block !important;
+  }
+
+  .print\:border-b {
+    border-bottom-width: 1px !important;
+  }
+
+  .print\:pb-4 {
+    padding-bottom: 1rem !important;
+  }
+
+  .print\:mb-4 {
+    margin-bottom: 1rem !important;
+  }
+
+  .print\:text-black {
+    color: black !important;
+  }
+
+  .print\:text-neutral-800 {
+    color: #262626 !important;
+  }
+
+  .print\:text-neutral-700 {
+    color: #404040 !important;
+  }
+
+  .print\:text-neutral-600 {
+    color: #525252 !important;
+  }
+
+  .print\:bg-white {
+    background: white !important;
+  }
+
+  .print\:bg-neutral-100 {
+    background: #f5f5f5 !important;
+  }
+
+  .print\:border-neutral-400 {
+    border-color: #a3a3a3 !important;
+  }
+
+  .print\:border-neutral-300 {
+    border-color: #d4d4d4 !important;
+  }
+
+  .print\:shadow-none {
+    box-shadow: none !important;
+  }
+
+  .print\:prose-sm {
+    font-size: 0.875rem !important;
+  }
+
+  .print\:space-y-4 > * + * {
+    margin-top: 1rem !important;
+  }
+
+  .print\:from-white {
+    --tw-gradient-from: white !important;
+  }
+
+  .print\:to-white {
+    --tw-gradient-to: white !important;
+  }
+
+  .print\:from-neutral-400 {
+    --tw-gradient-from: #a3a3a3 !important;
+  }
+
+  .print\:to-neutral-400 {
+    --tw-gradient-to: #a3a3a3 !important;
+  }
+}

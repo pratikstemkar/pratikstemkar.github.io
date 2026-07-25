@@ -8,9 +8,12 @@ export const SITE: Site = {
   NUM_PROJECTS_ON_HOMEPAGE: 3,
 };
 
+export const OPEN_TO_WORK = true;
+
 export const HOME: Metadata = {
   TITLE: "Home",
-  DESCRIPTION: "Software Engineer building Distributed Systems",
+  DESCRIPTION:
+    "Software Engineer building Distributed Systems · Databases · Agentic AI",
 };
 
 export const BLOG: Metadata = {
@@ -28,6 +31,11 @@ export const PROJECTS: Metadata = {
   DESCRIPTION: "A collection of my projects, with links to repositories and demos.",
 };
 
+export const RESUME: Metadata = {
+  TITLE: "Resume",
+  DESCRIPTION: "Download my resume and learn more about my skills and experience.",
+};
+
 export const SOCIALS: Socials = [
   {
     NAME: "twitter-x",
@@ -40,5 +48,5 @@ export const SOCIALS: Socials = [
   {
     NAME: "linkedin",
     HREF: "https://www.linkedin.com/in/pratikstemkar",
-  }
+  },
 ];
