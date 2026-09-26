@@ -1,0 +1,51 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+  entry: CollectionEntry<"travels">;
+  delay?: number;
+  eager?: boolean;
+};
+
+const { entry, delay = 0, eager = false } = Astro.props;
+const { title, location, description, cover, date } = entry.data;
+
+const formattedDate = date.toLocaleDateString("en-us", {
+  month: "short",
+  year: "numeric",
+});
+---
+
+<a
+  href={`/travels/${entry.slug}`}
+  class="group card-surface card-surface-hover reveal block overflow-hidden"
+  style={`--reveal-delay: ${delay}ms`}
+>
+  <div class="relative aspect-[4/3] overflow-hidden">
+    <img
+      src={cover}
+      alt={title}
+      loading={eager ? "eager" : "lazy"}
+      class="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/5 to-transparent"></div>
+    <div class="absolute inset-x-4 bottom-3 flex items-center justify-between text-white">
+      <span class="inline-flex items-center gap-1 text-xs font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>
+        {location}
+      </span>
+      <span class="text-xs tabular-nums text-white/85">{formattedDate}</span>
+    </div>
+  </div>
+  <div class="space-y-1 p-5">
+    <h3 class="font-semibold text-neutral-900 transition-colors duration-300 group-hover:text-emerald-600 dark:text-white dark:group-hover:text-emerald-400">
+      {title}
+    </h3>
+    <p class="line-clamp-2 text-sm text-neutral-500 dark:text-neutral-400">
+      {description}
+    </p>
+  </div>
+</a>

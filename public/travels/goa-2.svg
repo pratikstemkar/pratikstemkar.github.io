@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" role="img" aria-label="Sunset at Vagator">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e2954f"/>
+      <stop offset="100%" stop-color="#f8d3a4"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#g)"/>
+  <circle cx="600" cy="250" r="125" fill="#ffffff" opacity="0.25"/>
+  <circle cx="160" cy="750" r="166" fill="#ffffff" opacity="0.12"/>
+  <path d="M0 750 Q 200 600 400 750 T 800 750 V 1000 H 0 Z" fill="#ffffff" opacity="0.10"/>
+  <text x="6%" y="88%" font-family="Inter, system-ui, sans-serif" font-size="71" font-weight="600" fill="#ffffff" opacity="0.95">Sunset at Vagator</text>
+  <text x="6%" y="94%" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#ffffff" opacity="0.75">North Goa</text>
+</svg>

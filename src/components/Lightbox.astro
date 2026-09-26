@@ -1,0 +1,141 @@
+---
+// A minimal, dependency-free lightbox.
+// Any <img data-lightbox> (optionally data-caption="...") becomes clickable.
+---
+
+<div
+  id="lightbox"
+  class="fixed inset-0 z-[120] hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Photo viewer"
+>
+  <div id="lightbox-backdrop" class="absolute inset-0 bg-neutral-950/90 backdrop-blur-sm"></div>
+
+  <button
+    id="lightbox-close"
+    type="button"
+    aria-label="Close photo viewer"
+    class="absolute right-4 top-4 z-10 flex size-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+    </svg>
+  </button>
+
+  <button
+    id="lightbox-prev"
+    type="button"
+    aria-label="Previous photo"
+    class="absolute left-3 top-1/2 z-10 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m15 18-6-6 6-6" />
+    </svg>
+  </button>
+
+  <button
+    id="lightbox-next"
+    type="button"
+    aria-label="Next photo"
+    class="absolute right-3 top-1/2 z-10 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  </button>
+
+  <figure class="relative flex h-full w-full flex-col items-center justify-center gap-4 px-14 py-16">
+    <img
+      id="lightbox-img"
+      src=""
+      alt=""
+      class="max-h-[78vh] max-w-full rounded-xl object-contain shadow-2xl"
+    />
+    <figcaption class="max-w-2xl text-center text-sm text-white/85" id="lightbox-caption"></figcaption>
+    <div class="text-xs tabular-nums text-white/50" id="lightbox-counter"></div>
+  </figure>
+</div>
+
+<script>
+  function initLightbox() {
+    const root = document.getElementById("lightbox") as HTMLElement | null;
+    if (!root) return;
+
+    const imgEl = document.getElementById("lightbox-img") as HTMLImageElement;
+    const captionEl = document.getElementById("lightbox-caption") as HTMLElement;
+    const counterEl = document.getElementById("lightbox-counter") as HTMLElement;
+    const closeBtn = document.getElementById("lightbox-close");
+    const prevBtn = document.getElementById("lightbox-prev");
+    const nextBtn = document.getElementById("lightbox-next");
+    const backdrop = document.getElementById("lightbox-backdrop");
+
+    const images = Array.from(
+      document.querySelectorAll<HTMLImageElement>("img[data-lightbox]"),
+    );
+
+    let index = 0;
+
+    const render = () => {
+      const current = images[index];
+      if (!current) return;
+      imgEl.src = current.getAttribute("data-lightbox") || current.src;
+      imgEl.alt = current.getAttribute("data-caption") || current.alt || "";
+      captionEl.textContent = current.getAttribute("data-caption") || current.alt || "";
+      counterEl.textContent = `${index + 1} / ${images.length}`;
+      const many = images.length > 1;
+      prevBtn?.classList.toggle("hidden", !many);
+      nextBtn?.classList.toggle("hidden", !many);
+    };
+
+    const open = (i: number) => {
+      index = i;
+      root.classList.remove("hidden");
+      document.documentElement.style.overflow = "hidden";
+      render();
+      closeBtn?.focus();
+    };
+
+    const close = () => {
+      root.classList.add("hidden");
+      document.documentElement.style.overflow = "";
+    };
+
+    const step = (dir: number) => {
+      if (images.length === 0) return;
+      index = (index + dir + images.length) % images.length;
+      render();
+    };
+
+    images.forEach((image, i) => {
+      if (image.dataset.lightboxBound) return;
+      image.dataset.lightboxBound = "true";
+      image.style.cursor = "zoom-in";
+      image.addEventListener("click", (event) => {
+        // Avoid navigating if the image sits inside a link/card.
+        event.preventDefault();
+        event.stopPropagation();
+        open(i);
+      });
+    });
+
+    if (!root.dataset.bound) {
+      root.dataset.bound = "true";
+      closeBtn?.addEventListener("click", close);
+      backdrop?.addEventListener("click", close);
+      prevBtn?.addEventListener("click", () => step(-1));
+      nextBtn?.addEventListener("click", () => step(1));
+
+      document.addEventListener("keydown", (event) => {
+        if (root.classList.contains("hidden")) return;
+        if (event.key === "Escape") close();
+        if (event.key === "ArrowLeft") step(-1);
+        if (event.key === "ArrowRight") step(1);
+      });
+    }
+  }
+
+  document.addEventListener("astro:page-load", initLightbox);
+  document.addEventListener("DOMContentLoaded", initLightbox);
+  if (document.readyState !== "loading") initLightbox();
+</script>

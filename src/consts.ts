@@ -4,8 +4,9 @@ export const SITE: Site = {
   NAME: "Pratik Temkar",
   EMAIL: "pratikstemkar@gmail.com",
   NUM_POSTS_ON_HOMEPAGE: 3,
-  NUM_WORKS_ON_HOMEPAGE: 1,
+  NUM_WORKS_ON_HOMEPAGE: 2,
   NUM_PROJECTS_ON_HOMEPAGE: 3,
+  NUM_TRAVELS_ON_HOMEPAGE: 3,
 };
 
 export const OPEN_TO_WORK = true;
@@ -14,6 +15,17 @@ export const HOME: Metadata = {
   TITLE: "Home",
   DESCRIPTION:
     "Software Engineer building Distributed Systems · Databases · Agentic AI",
+};
+
+export const ABOUT: Metadata = {
+  TITLE: "About",
+  DESCRIPTION:
+    "Software engineer working on distributed systems, databases and agentic AI.",
+};
+
+export const TRAVELS: Metadata = {
+  TITLE: "Travels",
+  DESCRIPTION: "Photo stories from the places I have travelled to.",
 };
 
 export const BLOG: Metadata = {

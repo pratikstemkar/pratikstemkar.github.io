@@ -1,0 +1,197 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+import ArrowCard from "@components/ArrowCard.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+import { ABOUT, SITE, SOCIALS, OPEN_TO_WORK } from "@consts";
+import { RESUME_DATA } from "@data/resume";
+import { dateRange } from "@lib/utils";
+
+const allWork = (await getCollection("work")).sort(
+  (a, b) => new Date(b.data.dateStart).valueOf() - new Date(a.data.dateStart).valueOf(),
+);
+
+// Only the current role, falling back to the most recent entry.
+const currentWork = allWork.filter(
+  (item) => `${item.data.dateEnd}`.toLowerCase() === "current",
+);
+const collection = currentWork.length > 0 ? currentWork : allWork.slice(0, 1);
+
+const work = await Promise.all(
+  collection.map(async (item) => {
+    const { Content } = await item.render();
+    return { ...item, Content };
+  }),
+);
+
+const posts = (await getCollection("blog"))
+  .filter((post) => post.data.visible !== false)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: SITE.NAME,
+  url: Astro.site + "about",
+  email: SITE.EMAIL,
+  jobTitle: RESUME_DATA.title,
+  sameAs: SOCIALS.map((social) => social.HREF),
+  knowsAbout: RESUME_DATA.skills.flatMap((category) => category.skills),
+};
+---
+
+<PageLayout title={ABOUT.TITLE} description={ABOUT.DESCRIPTION}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Container>
+    <div class="space-y-16">
+      <!-- Hero -->
+      <header class="relative">
+        <div class="reveal">
+          {
+            OPEN_TO_WORK && (
+              <span class="mb-4 inline-flex items-center gap-1.5 rounded-full border border-purple-200 bg-purple-50 px-3 py-1 text-xs font-medium text-purple-700 dark:border-purple-700 dark:bg-purple-900/30 dark:text-purple-300">
+                <span class="relative flex h-2 w-2">
+                  <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-purple-400 opacity-75"></span>
+                  <span class="relative inline-flex h-2 w-2 rounded-full bg-purple-500"></span>
+                </span>
+                Open to Work
+              </span>
+            )
+          }
+          <h1 class="hero-name font-extrabold tracking-tight text-neutral-900 dark:text-white">
+            {SITE.NAME}
+          </h1>
+          <p class="mt-2 text-lg font-medium text-emerald-600 dark:text-emerald-400">
+            {RESUME_DATA.title}
+          </p>
+          <div class="mt-4 h-1 w-16 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400"></div>
+        </div>
+      </header>
+
+      <!-- Intro -->
+      <section class="reveal" style="--reveal-delay: 80ms">
+        <article class="!max-w-none">
+          <p>{RESUME_DATA.summary}</p>
+        </article>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a
+            href="/resume"
+            class="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white shadow-lg shadow-emerald-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald-700"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+              <polyline points="14 2 14 8 20 8" />
+            </svg>
+            View resume
+          </a>
+          <a
+            href={`mailto:${SITE.EMAIL}`}
+            class="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-5 py-2.5 text-sm font-medium text-neutral-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-300 dark:border-neutral-700 dark:bg-neutral-800/60 dark:text-neutral-200"
+          >
+            Say hello
+          </a>
+        </div>
+      </section>
+
+      <!-- Experience -->
+      <section class="space-y-6">
+        <div class="reveal">
+          <SectionHeading title="Experience" />
+        </div>
+        <div class="relative">
+          <div class="absolute bottom-0 left-4 top-0 w-0.5 bg-gradient-to-b from-emerald-500 via-emerald-300 to-transparent"></div>
+          <ul class="space-y-0">
+            {
+              work.map((entry, i) => (
+                <li class="reveal relative pl-12" style={`--reveal-delay: ${i * 80}ms`}>
+                  <div class="absolute left-2 top-6 z-10 size-5 rounded-full border-4 border-[#fbfbfd] bg-emerald-500 dark:border-neutral-900"></div>
+                  <div class="card-surface card-surface-hover mb-6 p-5">
+                    <div class="flex flex-wrap items-baseline justify-between gap-2">
+                      <h3 class="font-semibold text-neutral-900 dark:text-white">
+                        {entry.data.company}
+                      </h3>
+                      <span class="text-xs tabular-nums text-emerald-600 dark:text-emerald-400">
+                        {dateRange(entry.data.dateStart, entry.data.dateEnd)}
+                      </span>
+                    </div>
+                    <div class="text-sm font-medium text-neutral-500 dark:text-neutral-400">
+                      {entry.data.role}
+                    </div>
+                    <article class="prose-sm mt-3 !max-w-none">
+                      <entry.Content />
+                    </article>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section class="space-y-6">
+        <div class="reveal">
+          <SectionHeading title="Skills" />
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {
+            RESUME_DATA.skills.map((category, i) => (
+              <div class="reveal card-surface p-5" style={`--reveal-delay: ${i * 60}ms`}>
+                <h3 class="mb-3 text-sm font-semibold text-neutral-900 dark:text-white">
+                  {category.name}
+                </h3>
+                <div class="flex flex-wrap gap-1.5">
+                  {category.skills.map((skill) => (
+                    <span class="rounded-full border border-neutral-200/80 bg-neutral-50 px-2.5 py-0.5 text-xs text-neutral-600 dark:border-neutral-700 dark:bg-neutral-800/60 dark:text-neutral-300">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Top posts -->
+      <section class="space-y-6">
+        <div class="reveal">
+          <SectionHeading title="Top posts" href="/blog" linkLabel="See all posts" />
+        </div>
+        <ul class="reveal flex flex-col divide-y divide-neutral-100 dark:divide-neutral-800/60">
+          {posts.map((post) => (
+            <li>
+              <ArrowCard entry={post} />
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <!-- Elsewhere -->
+      <section class="reveal space-y-4">
+        <SectionHeading title="Elsewhere" />
+        <p class="max-w-prose text-neutral-600 dark:text-neutral-400">
+          When I'm not working on systems, I'm usually writing about them.
+        </p>
+        <ul class="flex flex-wrap gap-2">
+          {
+            SOCIALS.map((social) => (
+              <li>
+                <a
+                  href={social.HREF}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm text-neutral-600 transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-300 hover:text-emerald-600 dark:border-neutral-700 dark:bg-neutral-800/60 dark:text-neutral-300"
+                >
+                  {social.NAME}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </Container>
+</PageLayout>

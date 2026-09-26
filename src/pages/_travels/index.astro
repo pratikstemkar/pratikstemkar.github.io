@@ -1,0 +1,67 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+import TravelCard from "@components/TravelCard.astro";
+import { TRAVELS } from "@consts";
+
+const trips = (await getCollection("travels"))
+  .filter((trip) => !trip.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const totalPhotos = trips.reduce((sum, trip) => sum + trip.data.images.length, 0);
+const places = new Set(trips.map((trip) => trip.data.location)).size;
+
+const stats = [
+  { value: trips.length, label: "trips" },
+  { value: totalPhotos, label: "photos" },
+  { value: places, label: "places" },
+];
+---
+
+<PageLayout title={TRAVELS.TITLE} description={TRAVELS.DESCRIPTION}>
+  <Container>
+    <div class="space-y-12">
+      <!-- Hero -->
+      <header class="relative">
+        <div class="relative space-y-4 reveal">
+          <p class="text-sm font-medium uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+            Travel journal
+          </p>
+          <h1 class="hero-name font-extrabold tracking-tight text-neutral-900 dark:text-white">
+            Places I've been
+          </h1>
+          <p class="max-w-prose text-neutral-500 dark:text-neutral-400">
+            Photo stories from road trips, coastlines and mountains — the moments
+            between the commits.
+          </p>
+          <div class="flex flex-wrap gap-6 pt-2">
+            {
+              stats.map((stat) => (
+                <div class="flex items-baseline gap-2">
+                  <span class="text-2xl font-bold text-neutral-900 dark:text-white">
+                    {stat.value}
+                  </span>
+                  <span class="text-sm text-neutral-400">{stat.label}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </header>
+
+      <!-- Grid -->
+      {
+        trips.length === 0 ? (
+          <p class="text-neutral-500">No trips yet — check back soon.</p>
+        ) : (
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {trips.map((trip, i) => (
+              <TravelCard entry={trip} delay={(i % 3) * 80} eager={i < 3} />
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </Container>
+</PageLayout>

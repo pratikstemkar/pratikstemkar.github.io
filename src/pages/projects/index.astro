@@ -6,24 +6,27 @@ import ArrowCard from "@components/ArrowCard.astro";
 import { PROJECTS } from "@consts";
 
 const projects = (await getCollection("projects"))
-  .filter(project => !project.data.draft)
+  .filter((project) => !project.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <PageLayout title={PROJECTS.TITLE} description={PROJECTS.DESCRIPTION}>
   <Container>
     <div class="space-y-10">
-      <div class="animate">
-        <div class="font-semibold text-neutral-900 dark:text-white text-2xl">
+      <header class="reveal relative">
+        <h1 class="relative font-extrabold tracking-tight text-neutral-900 dark:text-white text-3xl">
           Projects
-        </div>
-        <div class="w-12 h-1 bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full mt-2"></div>
-      </div>
-      <ul class="animate flex flex-col divide-y divide-neutral-100 dark:divide-neutral-800/60">
+        </h1>
+        <p class="relative mt-2 max-w-prose text-neutral-500 dark:text-neutral-400">
+          {PROJECTS.DESCRIPTION}
+        </p>
+        <div class="relative mt-4 h-1 w-12 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400"></div>
+      </header>
+      <ul class="reveal flex flex-col divide-y divide-neutral-100 dark:divide-neutral-800/60">
         {
           projects.map((project) => (
             <li>
-              <ArrowCard entry={project} showTags={true}/>
+              <ArrowCard entry={project} showTags={true} />
             </li>
           ))
         }

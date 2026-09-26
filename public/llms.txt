@@ -17,9 +17,10 @@ This is the personal portfolio and blog of Pratik Temkar, a software developer a
 ## Site Sections
 
 - [Home](/) - Introduction and overview
+- [About](/about) - About Pratik, experience and skills
 - [Blog](/blog) - Technical articles and thoughts on software development
 - [Projects](/projects) - Portfolio of personal and professional projects
-- [Work](/work) - Professional work experience
+- [Resume](/resume) - Resume and skills
 
 ## About the Content
 

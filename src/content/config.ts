@@ -40,4 +40,25 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { blog, work, projects };
+const travels = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    location: z.string(),
+    date: z.coerce.date(),
+    description: z.string(),
+    cover: z.string(),
+    images: z
+      .array(
+        z.object({
+          src: z.string(),
+          caption: z.string().optional(),
+        }),
+      )
+      .default([]),
+    tags: z.array(z.string()).optional(),
+    draft: z.boolean().optional(),
+  }),
+});
+
+export const collections = { blog, work, projects, travels };

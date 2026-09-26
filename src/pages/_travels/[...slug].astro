@@ -1,0 +1,104 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+import BackToPrev from "@components/BackToPrev.astro";
+
+export async function getStaticPaths() {
+  const trips = (await getCollection("travels")).filter((trip) => !trip.data.draft);
+  return trips.map((trip) => ({
+    params: { slug: trip.slug },
+    props: { trip },
+  }));
+}
+
+type Props = { trip: CollectionEntry<"travels"> };
+const { trip } = Astro.props;
+const { Content } = await trip.render();
+
+const formattedDate = trip.data.date.toLocaleDateString("en-us", {
+  month: "long",
+  year: "numeric",
+});
+---
+
+<PageLayout title={trip.data.title} description={trip.data.description} image={trip.data.cover}>
+  <Container>
+    <div class="space-y-10">
+      <div class="reveal">
+        <BackToPrev href="/travels">Back to travels</BackToPrev>
+      </div>
+
+      <!-- Header -->
+      <header class="reveal space-y-3" style="--reveal-delay: 60ms">
+        <div class="flex flex-wrap items-center gap-3 text-sm text-emerald-600 dark:text-emerald-400">
+          <span class="inline-flex items-center gap-1 font-medium">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            {trip.data.location}
+          </span>
+          <span class="text-neutral-300 dark:text-neutral-600">&bull;</span>
+          <span class="tabular-nums text-neutral-500 dark:text-neutral-400">{formattedDate}</span>
+        </div>
+        <h1 class="font-extrabold tracking-tight text-3xl text-neutral-900 dark:text-white sm:text-4xl">
+          {trip.data.title}
+        </h1>
+        <p class="max-w-prose text-neutral-500 dark:text-neutral-400">
+          {trip.data.description}
+        </p>
+        {
+          trip.data.tags && trip.data.tags.length > 0 && (
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              {trip.data.tags.map((tag) => (
+                <span class="rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )
+        }
+      </header>
+
+      <!-- Cover -->
+      <div class="reveal card-surface overflow-hidden p-0">
+        <img
+          src={trip.data.cover}
+          alt={trip.data.title}
+          class="h-full w-full object-cover"
+        />
+      </div>
+
+      <!-- Story -->
+      <article class="reveal mx-auto !max-w-[70ch]">
+        <Content />
+      </article>
+
+      <!-- Gallery -->
+      {
+        trip.data.images.length > 0 && (
+          <section class="space-y-4">
+            <h2 class="flex items-center gap-2 text-lg font-semibold text-neutral-900 dark:text-white">
+              <span class="inline-block size-2 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600" />
+              Photos
+            </h2>
+            <div class="columns-2 gap-4 [&>*]:mb-4 sm:columns-3 [column-fill:_balance]">
+              {trip.data.images.map((image, i) => (
+                <img
+                  src={image.src}
+                  alt={image.caption || trip.data.title}
+                  data-lightbox={image.src}
+                  data-caption={image.caption || ""}
+                  loading="lazy"
+                  class="reveal w-full rounded-xl border border-neutral-200/60 object-cover shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-xl dark:border-neutral-700/60"
+                  style={`--reveal-delay: ${(i % 3) * 70}ms`}
+                />
+              ))}
+            </div>
+          </section>
+        )
+      }
+    </div>
+  </Container>
+</PageLayout>

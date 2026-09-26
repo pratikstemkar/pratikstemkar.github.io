@@ -129,6 +129,7 @@ const { title, description, image = "/og/site.png" } = Astro.props;
     preloadTheme();
     onScroll();
     animate();
+    revealOnScroll();
 
     const backToTop = document.getElementById("back-to-top");
     backToTop?.addEventListener("click", (event) => scrollToTop(event));
@@ -156,7 +157,7 @@ const { title, description, image = "/og/site.png" } = Astro.props;
 
     window.matchMedia("(prefers-color-scheme: dark)")
       .addEventListener("change", event => {
-        if (localStorage.theme === "system" || !localStorage.theme) {
+        if (localStorage.theme === "system") {
           toggleTheme(event.matches);
         }
       }
@@ -242,6 +243,35 @@ const { title, description, image = "/og/site.png" } = Astro.props;
     });
   }
 
+  function revealOnScroll() {
+    const elements = document.querySelectorAll(".reveal");
+
+    if (!("IntersectionObserver" in window)) {
+      elements.forEach((element) => element.classList.add("in-view"));
+      return;
+    }
+
+    // Clean up any observer from a previous page transition.
+    if (window.__revealObserver) {
+      window.__revealObserver.disconnect();
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    elements.forEach((element) => observer.observe(element));
+    window.__revealObserver = observer;
+  }
+
   function onScroll() {
     if (window.scrollY > 0) {
       document.documentElement.classList.add("scrolled");
@@ -292,7 +322,8 @@ function toggleTheme(dark) {
     if (userTheme === "light" || userTheme === "dark") {
       toggleTheme(userTheme === "dark");
     } else {
-      toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+      // Default to dark; visitors can still switch or choose system.
+      toggleTheme(true);
     }
   }
 

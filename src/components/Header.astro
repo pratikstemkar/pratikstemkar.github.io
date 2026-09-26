@@ -2,36 +2,45 @@
 import Container from "@components/Container.astro";
 import Link from "@components/Link.astro";
 import { SITE } from "@consts";
+
+const pathname = Astro.url.pathname;
+const nav = [
+  { label: "about", href: "/about" },
+  { label: "blog", href: "/blog" },
+  { label: "projects", href: "/projects" },
+];
+
+const isActive = (href: string) =>
+  href === "/" ? pathname === "/" : pathname.startsWith(href);
 ---
 
-<header>
+<header class="site-header">
   <Container>
-    <div class="flex flex-wrap gap-y-2 justify-between">
+    <div class="flex flex-wrap gap-y-2 items-center justify-between">
       <Link href="/" underline={false}>
-        <div class="font-semibold">
+        <div class="font-semibold tracking-tight text-neutral-900 dark:text-white flex items-center gap-2">
+          <span class="inline-block size-2 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600"></span>
           {SITE.NAME}
         </div>
       </Link>
-      <nav class="flex gap-1">
-        <Link href="/blog">
-          blog
-        </Link>
-        <span>
-          {`/`}
-        </span>
-        <Link href="/work">
-          work
-        </Link>
-        <span>
-          {`/`}
-        </span>
-        <Link href="/projects">
-          projects
-        </Link>
-        <span>
-          {`/`}
-        </span>
-        <Link href="/resume">
+      <nav class="flex items-center gap-4 text-sm">
+        {
+          nav.map((item) => (
+            <Link
+              href={item.href}
+              underline={false}
+              class="nav-link text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors duration-300"
+              aria-current={isActive(item.href) ? "page" : undefined}
+            >
+              {item.label}
+            </Link>
+          ))
+        }
+        <Link
+          href="/resume"
+          underline={false}
+          class="hidden sm:inline-flex items-center rounded-full border border-emerald-500/30 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700 hover:border-emerald-500/60 hover:bg-emerald-100/80 dark:bg-emerald-900/30 dark:text-emerald-300 transition-all duration-300"
+        >
           resume
         </Link>
       </nav>

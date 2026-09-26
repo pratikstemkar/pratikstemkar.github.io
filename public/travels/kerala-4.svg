@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000" role="img" aria-label="Varkala Cliff">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3a9a76"/>
+      <stop offset="100%" stop-color="#bce6d3"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="1000" fill="url(#g)"/>
+  <circle cx="750" cy="250" r="125" fill="#ffffff" opacity="0.25"/>
+  <circle cx="200" cy="750" r="166" fill="#ffffff" opacity="0.12"/>
+  <path d="M0 750 Q 250 600 500 750 T 1000 750 V 1000 H 0 Z" fill="#ffffff" opacity="0.10"/>
+  <text x="6%" y="88%" font-family="Inter, system-ui, sans-serif" font-size="71" font-weight="600" fill="#ffffff" opacity="0.95">Varkala Cliff</text>
+  <text x="6%" y="94%" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#ffffff" opacity="0.75">Kerala</text>
+</svg>

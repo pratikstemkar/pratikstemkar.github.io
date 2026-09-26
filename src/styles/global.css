@@ -43,19 +43,31 @@ body {
 body {
   @apply font-sans antialiased;
   @apply flex flex-col;
-  @apply bg-neutral-50 dark:bg-neutral-900;
   @apply text-neutral-600 dark:text-neutral-300;
+  background-color: #fbfbfd;
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(16, 185, 129, 0.06), transparent 42%),
+    radial-gradient(circle at 88% 4%, rgba(56, 189, 248, 0.05), transparent 40%);
+  background-attachment: fixed;
 }
 
-header {
+html.dark body {
+  @apply bg-neutral-900;
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(16, 185, 129, 0.08), transparent 42%),
+    radial-gradient(circle at 88% 4%, rgba(56, 189, 248, 0.06), transparent 40%);
+}
+
+.site-header {
   @apply fixed top-0 left-0 right-0 z-50 py-5;
-  @apply bg-neutral-50/80 dark:bg-neutral-900/80;
+  @apply bg-white/70 dark:bg-neutral-900/80;
   @apply backdrop-blur-md saturate-150;
   @apply border-b border-transparent;
 }
 
-html.scrolled header {
-  @apply border-neutral-200/50 dark:border-neutral-700/50;
+html.scrolled .site-header {
+  @apply border-neutral-200/60 dark:border-neutral-700/50;
+  @apply shadow-[0_1px_20px_-12px_rgba(0,0,0,0.25)];
 }
 
 main {
@@ -219,6 +231,109 @@ article .warning {
   @apply opacity-100 translate-y-0;
 }
 
+/* ---- Reveal on scroll (IntersectionObserver-driven) ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Light surface helpers ---- */
+.card-surface {
+  @apply rounded-2xl border border-neutral-200/80 bg-white/80 dark:border-neutral-700/70 dark:bg-neutral-800/50;
+  @apply backdrop-blur-sm;
+  @apply shadow-[0_1px_2px_rgba(16,24,40,0.04),0_12px_32px_-20px_rgba(16,24,40,0.18)];
+  @apply transition-all duration-500 ease-out;
+}
+
+.card-surface-hover {
+  @apply hover:-translate-y-1 hover:border-emerald-300/70 dark:hover:border-emerald-500/60;
+  @apply hover:shadow-[0_2px_4px_rgba(16,24,40,0.05),0_24px_50px_-24px_rgba(5,150,105,0.35)];
+}
+
+.text-gradient {
+  background: linear-gradient(120deg, #059669 0%, #10b981 45%, #34d399 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Animated underline for nav links */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1.5px;
+  width: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #059669, #34d399);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-link:hover::after,
+.nav-link[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+/* ---- Floating ambient blobs ---- */
+.blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes float-blob {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -24px, 0) scale(1.06);
+  }
+}
+
+.animate-float {
+  animation: float-blob 9s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-blob 13s ease-in-out infinite;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  opacity: 0;
+  animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
 html #back-to-top {
   @apply opacity-0 pointer-events-none;
 }
@@ -230,6 +345,27 @@ html.scrolled #back-to-top {
 @media (max-width: 639px) {
   #back-to-top {
     @apply hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal,
+  .animate,
+  .animate-fade-up {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .animate-float,
+  .animate-float-slow,
+  .animate-wave {
+    animation: none !important;
   }
 }
 
@@ -273,7 +409,7 @@ html.scrolled #back-to-top {
     font-size: 12px;
   }
 
-  header,
+  .site-header,
   footer,
   #command-palette,
   #back-to-top {

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Lake Pichola">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#b94f49"/>
+      <stop offset="100%" stop-color="#e8a08c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g)"/>
+  <circle cx="900" cy="200" r="100" fill="#ffffff" opacity="0.25"/>
+  <circle cx="240" cy="600" r="133" fill="#ffffff" opacity="0.12"/>
+  <path d="M0 600 Q 300 480 600 600 T 1200 600 V 800 H 0 Z" fill="#ffffff" opacity="0.10"/>
+  <text x="6%" y="88%" font-family="Inter, system-ui, sans-serif" font-size="57" font-weight="600" fill="#ffffff" opacity="0.95">Lake Pichola</text>
+  <text x="6%" y="94%" font-family="Inter, system-ui, sans-serif" font-size="30" font-weight="400" fill="#ffffff" opacity="0.75">Udaipur</text>
+</svg>
